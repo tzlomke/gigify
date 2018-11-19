@@ -4,12 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Gigify</title>
+    <!-- Bulma.io -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Cabin+Sketch|Cutive|Lobster|Pacifico|Roboto+Condensed" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome Embed -->
+    <script src="https://use.fontawesome.com/9b7fd42174.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>
-        Project 1
-    </h1>
-    <p>This is a project!</p>
+
+    <!-- Landing Page -->
+    <section class="section level" id="landing-page">
+        <div class="container level-item">
+            <div class="columns">
+                <div class="column">
+                    <div class="card start-card">
+                        <br>
+                        <div class="card-content">
+                            <h1 class="logo">Gigify</h1> 
+
+                            <br><br><br>
+                            
+                            <div class="animated-search">
+                                    <div class="container-2">
+                                        <span class="icon"><i class="fa fa-search">&nbsp;&nbsp;&nbsp;</i></span>
+                                        <input type="search" id="search" placeholder="Search for a band or artist..." />
+                                    </div>
+                            </div>
+
+                            <br><br>
+
+                            <h4>- OR -</h4>
+
+                            <br>
+
+                            <button class="spotify-link" type="button"><i class="fa fa-spotify" aria-hidden="true"></i> Link to your Spotify Account</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Main Page -->
+    <section class="section level" id="main-page">
+        <div class="container level-item">
+            <div class="columns">
+                
+                <div class="column level-left">
+                    <div>
+                        <p>This is content</p>
+                    </div>
+                </div>
+
+                <div class="column level-right">
+                    <div>
+                        <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
 </html>
