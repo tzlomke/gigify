@@ -25,20 +25,22 @@
 
 $(document).ready(function() {
     let artistRequested = 'Ivan Torrent';
+
+        $('.spotify-link').on('click', function() {
+            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
+        });
     
+    $('.API_test').on('click', function() {
     // function spotifyAPICall() {
-    //     let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist`;
-    //     $.ajax ({
-    //         url : queryURL,
-    //         method: 'GET',
-    //     }).then(function(response){
-    //         console.log(response);
-    //     });
+        console.log("Hey!");
+        let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist`;
+        $.ajax ({
+            url : queryURL,
+            method: 'GET',
+        }).then(function(response){
+            console.log(response);
+        });
     // };
-    
-    // spotifyAPICall();
-    
-    $('.spotify-link').on('click', function() {
-        $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
-    });
+});
+
     });
