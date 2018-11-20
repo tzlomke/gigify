@@ -34,6 +34,8 @@ $(document).ready(function() {
     
     $('.API_test').on('click', function() {
         let tokenArray = URL.split('/');
+        console.log(tokenArray);
+        console.log(tokenArray[4]);
     // function spotifyAPICall() {
         console.log("Hey!");
         let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist&${tokenArray[4]}`;
