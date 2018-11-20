@@ -33,10 +33,10 @@ $(document).ready(function() {
         });
     
     $('.API_test').on('click', function() {
-        console.log(URL.split('/'));
+        let tokenArray = URL.split('/');
     // function spotifyAPICall() {
         console.log("Hey!");
-        let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist`;
+        let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist&${tokenArray[4]}`;
         $.ajax ({
             url : queryURL,
             method: 'GET',
