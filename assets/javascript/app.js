@@ -34,18 +34,29 @@ $(document).ready(function() {
     
     $('.API_test').on('click', function() {
         let tokenArray = URL.split('#');
-        console.log(tokenArray);
-        console.log(tokenArray[1]);
+        let client_token = tokenArray[1];
     // function spotifyAPICall() {
         console.log("Hey!");
-        let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist&` + tokenArray[1];
+        let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist&${client_token}`;
         $.ajax ({
             url : queryURL,
             method: 'GET',
-        }).then(function(response){
+        }).then(function(response) {
             console.log(response);
         });
     // };
-});
 
+    $('.API_test').on('click', function() {
+        let artistRequested = $('#search').val();
+        console.log(artistRequested);
+        let BITURL = `https://rest.bandsintown.com/artists/${artistRequested}/events?app_id=`
+        let BIT_Id = '6d9b15f09f67304fbd702249a8b58714';
+        $.ajax ({
+            url : BITURL + BIT_Id,
+            method: 'GET',
+        }).then(function(response) {
+            console.log(response);
+        });
     });
+});
+});
