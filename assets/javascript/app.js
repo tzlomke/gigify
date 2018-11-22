@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     // Bandsintown Variables and Arrays
     var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
-    var BIT_Object = [];
+    var BIT_Object = {};
 
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
@@ -99,7 +99,7 @@ $(document).ready(function () {
                         method: "GET"
                     }).then (function (response) {
                         console.log(response);
-                        // Pushes each response into BIT_Object (a JSON-style array) so that we can pull this data to populate our page
+                        // Pushes each response into BIT_Object (a JSON-style object) so that we can pull this data to populate our page
                         BIT_Object.push(response);
                     })
                 }
