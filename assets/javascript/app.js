@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     // Bandsintown Variables and Arrays
     var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
-    var BIT_Object = {};
+    var BITObjectArray = []
 
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
@@ -91,19 +91,23 @@ $(document).ready(function () {
                 console.log(spotifyID);
                 console.log(artistImage);
 
-                // For loop to pass newly populated favoriteArtists array as query to Bandsintown API
+                // For loop to pass favoriteArtists array as query to Bandsintown API
                 for (var i = 0; i < favoriteArtists.length; i++) {
                     var BITURL = "https://rest.bandsintown.com/artists/" + favoriteArtists[i] + "/events?app_id=" + BIT_Id;
                     $.ajax({
                         url: BITURL,
                         method: "GET"
-                    }).then (function (response) {
+                    }).then(function (response) {
                         console.log(response);
-                        // Pushes each response into BIT_Object (a JSON-style object) so that we can pull this data to populate our page
-                        BIT_Object.push(response);
+                        var name = favoriteArtists[i];
+                        // Sets each response as element of BITObjectArray (an array of JSON-style objects) so that we can pull this data to populate our page
+                        BITObjectArray.push({
+                            artistName: name,
+                            eventData: response
+                        })
                     })
+                    console.log(BITObjectArray);
                 }
-                console.log(BIT_Object);
             })
         };
 
