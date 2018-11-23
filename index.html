@@ -43,6 +43,38 @@
                                         <span class="icon"><i class="fa fa-search">&nbsp;&nbsp;&nbsp;</i></span>
                                         <input type="search" id="search" placeholder=" Search for a band or artist..." />
                                     </div>
+                                        <!-- Empty Field Modal -->
+                                        <div class="container" id="app">
+                                            <div id="emptyOpenModal" class="modal">
+                                            <div class="modal-background"></div>
+                                            <div class="modal-content">
+                                                <!-- Any other Bulma elements you want -->
+                                                <table>
+                                                <tr>
+                                                    <h3>Error: This search field is empty.</h3>
+                                                </tr>
+                                                </table>
+                                                <input type="text" class="input" />
+                                            </div>
+                                            <button id="emptyCloseModal" class="modal-close"></button>
+                                            </div>
+                                        </div>
+                                        <!-- Invalid Search Modal -->
+                                        <div class="container" id="app">
+                                                <div id="invalidOpenModal" class="modal">
+                                                <div class="modal-background"></div>
+                                                <div class="modal-content">
+                                                    <!-- Any other Bulma elements you want -->
+                                                    <table>
+                                                    <tr>
+                                                        <h3>Error: The artist you searched for was not found. Please check your spelling.</h3>
+                                                    </tr>
+                                                    </table>
+                                                    <input type="text" class="input" />
+                                                </div>
+                                                <button id="invalidCloseModal" class="modal-close"></button>
+                                                </div>
+                                            </div>
                             </div>
 
                             <br><br>

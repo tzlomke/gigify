@@ -37,6 +37,34 @@ $(document).ready(function () {
     var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
     var BITObjectArray = []
 
+
+    // Search Function if user makes a direct search
+    $("#search").on("click", function() {
+        event.preventDefault();
+        var userInput = $("#userInput").val().trim().toString();
+        console.log(userInput);
+
+
+    // Validating that the input field is not empty
+        if (userInput === "") {
+            // Calling modal
+            $("#emptyOpenModal").addClass("is-active");
+            // Closing modal
+            $("#emptyCloseModal").click(function() {
+            $("#emptyOpenModal").removeClass("is-active");
+            });
+
+    // searching bands in town using input to return either a table or an error modal
+        } else {
+            $("#userInput").append(userInput)
+            // search bands in town and populate table
+            // if (userInput does not match any artist name) 
+            // {create another modal communicating invalid artist}
+        }
+
+    });
+
+
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
 
