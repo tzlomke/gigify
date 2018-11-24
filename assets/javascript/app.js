@@ -96,11 +96,10 @@ $(document).ready(function () {
                 // BIT AJAX call nested in function and looped manually so that it occurs synchronously
                 function runLoop(response) {
                     var i = 0;
-                    var BITURL = "https://rest.bandsintown.com/artists/" + response[i] + "/events?app_id=" + BIT_Id;
                     function next () {
                         if (i < response.length) {
                             return $.ajax({
-                                url: BITURL,
+                                url: "https://rest.bandsintown.com/artists/" + response[i] + "/events?app_id=" + BIT_Id,
                                 method: "GET",
                                 ajaxI: response[i]
                             }).then(function (response) {
