@@ -91,7 +91,7 @@ $(document).ready(function () {
                 console.log(spotifyID);
                 console.log(artistImage);
 
-                $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + spotifyID);
+                $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + spotifyID[0]);
 
                 // For loop to pass favoriteArtists array as query to Bandsintown API
                 for (var i = 0; i < favoriteArtists.length; i++) {
@@ -109,7 +109,11 @@ $(document).ready(function () {
                             eventData: response
                         })
                     })
-                    console.log(BITObjectArray);
+                    // This can be used when the band has no tour dates on bandsintown
+                    // Most likely retool this into a modal, or have it paste onto the table
+                    if(BITObjectArray === undefined || BITObjectArray.length === 0) {
+                        console.log("No tour dates!")
+                    }
                 }
             })
         };
