@@ -93,24 +93,37 @@ $(document).ready(function () {
 
                 $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + spotifyID);
 
-                // For loop to pass favoriteArtists array as query to Bandsintown API
-                for (var i = 0; i < favoriteArtists.length; i++) {
-                    var BITURL = "https://rest.bandsintown.com/artists/" + favoriteArtists[i] + "/events?app_id=" + BIT_Id;
-                    $.ajax({
-                        url: BITURL,
-                        method: "GET",
-                        ajaxI: favoriteArtists[i]
-                    }).then(function (response) {
-                        console.log(response);
-                        var name = this.ajaxI;
-                        // Sets each response as element of BITObjectArray (an array of JSON-style objects) so that we can pull this data to populate our page
-                        BITObjectArray.push({
-                            artistName: name,
-                            eventData: response
-                        })
-                    })
-                    console.log(BITObjectArray);
-                }
+                // BIT AJAX call nested in function and looped manually so that it occurs synchronously
+                function runLoop(data) {
+                    var i = 0;
+                    var BITURL = "https://rest.bandsintown.com/artists/" + data[i] + "/events?app_id=" + BIT_Id;
+                    function next () {
+                        if (i < data.length) {
+                            return $.ajax({
+                                url: BITURL,
+                                method: "GET",
+                                ajaxI: data[i]
+                            }).then(function (data) {
+                                console.log(response);
+                                var name = this.ajaxI;
+                                // Sets each response as element of BITObjectArray (an array of JSON-style objects) so that we can pull this data to populate our page
+                                BITObjectArray.push({
+                                    artistName: name,
+                                    eventData: response
+                                });
+                                ++i;
+                                return next();
+                            });
+                        };
+                    };
+                    return next()
+                };
+
+                runLoop(favoriteArtists).then(function (){
+                    
+                });
+
+                console.log(BITObjectArray);
             })
         };
 
