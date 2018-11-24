@@ -145,7 +145,6 @@ $(document).ready(function () {
         // Pass Selected Artist to Spotify Player
         $(document).on("click", "#artist-table tr.artist-name", function() {
             $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id)
-            // $("#event-table").append("<tr class='event-data'><td class='venue'>" + combinedArray[i].eventData.venue + "</td></tr>");
         });
 })
 
