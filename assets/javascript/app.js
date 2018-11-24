@@ -142,9 +142,12 @@ $(document).ready(function () {
         // Run Spotify API call function
         spotifyAPICall();
 
-        // Pass Selected Artist to Spotify Player
+        // Click Events for Artist Table Rows
         $(document).on("click", "#artist-table tr.artist-name", function() {
-            $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id)
+
+            // Pass Selected Artist to Spotify Player
+            $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id);
+            
         });
 })
 
