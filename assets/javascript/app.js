@@ -96,10 +96,11 @@ $(document).ready(function () {
                     var BITURL = "https://rest.bandsintown.com/artists/" + favoriteArtists[i] + "/events?app_id=" + BIT_Id;
                     $.ajax({
                         url: BITURL,
-                        method: "GET"
+                        method: "GET",
+                        ajaxI: favoriteArtists[i]
                     }).then(function (response) {
                         console.log(response);
-                        var name = favoriteArtists[i];
+                        var name = this.ajaxI;
                         // Sets each response as element of BITObjectArray (an array of JSON-style objects) so that we can pull this data to populate our page
                         BITObjectArray.push({
                             artistName: name,
