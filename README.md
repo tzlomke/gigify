@@ -4,7 +4,7 @@ Gigify allows users to ink to their Spotify account, and pull their "affinity da
 
 ## Getting Started
 
-Open your favorite browser, and then visit the published page at [Gigfy](https://tzlomke.github.io/Project_1/). By clicking on the ![Link account button](assets/images/link_to_account.png), you will be redirected to put in your credentials, and then the main page will be loaded. On the main page, you can utilize the populated table by clicking on the entries, the embedded player, and the search feature for additional bands.
+Open your favorite browser, and then visit the published page at [Gigfy](https://tzlomke.github.io/Project_1/). By clicking on the ![Link account button](assets/images/link_to_account.PNG), you will be redirected to put in your credentials, and then the main page will be loaded. On the main page, you can utilize the populated table by clicking on the entries, the embedded player, and the search feature for additional bands.
 
 ## Prerequisites
 
