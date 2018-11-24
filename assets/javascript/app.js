@@ -91,6 +91,8 @@ $(document).ready(function () {
                 console.log(spotifyID);
                 console.log(artistImage);
 
+                $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + spotifyID);
+
                 // For loop to pass favoriteArtists array as query to Bandsintown API
                 for (var i = 0; i < favoriteArtists.length; i++) {
                     var BITURL = "https://rest.bandsintown.com/artists/" + favoriteArtists[i] + "/events?app_id=" + BIT_Id;
