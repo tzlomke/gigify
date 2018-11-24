@@ -94,16 +94,16 @@ $(document).ready(function () {
                 $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + spotifyID);
 
                 // BIT AJAX call nested in function and looped manually so that it occurs synchronously
-                function runLoop(data) {
+                function runLoop(response) {
                     var i = 0;
-                    var BITURL = "https://rest.bandsintown.com/artists/" + data[i] + "/events?app_id=" + BIT_Id;
+                    var BITURL = "https://rest.bandsintown.com/artists/" + response[i] + "/events?app_id=" + BIT_Id;
                     function next () {
-                        if (i < data.length) {
+                        if (i < response.length) {
                             return $.ajax({
                                 url: BITURL,
                                 method: "GET",
                                 ajaxI: data[i]
-                            }).then(function (data) {
+                            }).then(function (response) {
                                 console.log(response);
                                 var name = this.ajaxI;
                                 // Sets each response as element of BITObjectArray (an array of JSON-style objects) so that we can pull this data to populate our page
@@ -113,15 +113,15 @@ $(document).ready(function () {
                                 });
                                 ++i;
                                 return next();
-                            });
-                        };
-                    };
+                            })
+                        }
+                    }
                     return next()
-                };
+                }
 
                 runLoop(favoriteArtists).then(function (){
                     
-                });
+                })
 
                 console.log(BITObjectArray);
             })
