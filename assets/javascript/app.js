@@ -102,7 +102,7 @@ $(document).ready(function () {
                             return $.ajax({
                                 url: BITURL,
                                 method: "GET",
-                                ajaxI: data[i]
+                                ajaxI: response[i]
                             }).then(function (response) {
                                 console.log(response);
                                 var name = this.ajaxI;
