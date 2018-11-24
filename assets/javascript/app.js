@@ -124,6 +124,12 @@ $(document).ready(function () {
                 })
 
                 console.log(BITObjectArray);
+
+                // Table Creation
+                for (var i = 0; i < favoriteArtists.length; i++) {
+                    $("#artist-table").append("<tr><td>" + favoriteArtists[i] + "</td></tr>");
+                    console.log("hello!");
+                }
             })
         };
 
