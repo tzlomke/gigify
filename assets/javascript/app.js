@@ -130,20 +130,25 @@ $(document).ready(function () {
 
 
 
-                // Table Creation
-                for (var i = 0; i < favoriteArtists.length; i++) {
-                    $("#artist-table").append("<tr class='artist-name'><td>" + favoriteArtists[i] + "</td></tr>");
-                }
-
-                $("#artist-table tr.artist-name").on("click", function() {
-                    
-                })
+                // Artist Table Creation
+                for (var i = 0; i < combinedArray.length; i++) {
+                    $("#artist-table").append("<tr class='artist-name' id=" 
+                        + combinedArray[i].spotifyID + "><td>"
+                        + combinedArray[i].artistName + "</td></tr>");
+                };                
             })
         };
 
         // Run Spotify API call function
         spotifyAPICall();
-    }
+
+        // Click Events for Artist Table Rows
+        $(document).on("click", "#artist-table tr.artist-name", function() {
+
+            // Pass Selected Artist to Spotify Player
+            $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id);
+            
+        });
 })
 
 
