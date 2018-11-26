@@ -63,7 +63,7 @@ $(document).ready(function () {
         console.log(finalTokenArray);
         var client_token = finalTokenArray[1];
         console.log(client_token);
-
+    
 
         // Spotify AJAX call
         function spotifyAPICall() {
@@ -149,6 +149,7 @@ $(document).ready(function () {
             $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id);
             
         });
+    }
 })
 
 
