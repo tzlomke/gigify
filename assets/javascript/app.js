@@ -39,7 +39,7 @@ $(document).ready(function () {
 
         // Click Event For Login
         $('.spotify-link').on('click', function () {
-            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=5337c5eb0a2442b182b404f5a590b917&redirect_uri=https:%2F%2Ftzlomke.github.io%2Fgigify_test%2F&scope=user-top-read%20user-library-read&state=123');
+            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
         });
 
         // Else statement (condition: access token in string). Main page functionality will occur within
