@@ -152,7 +152,7 @@ $(document).ready(function () {
                         "<td class='event-data city'>" + response[i].venue.city + "</td>" +
                         "<td class='event-data country'>" + response[i].venue.country + "</td>" +
                         "<td class='event-data date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                        "<td class='event-data ticket-link'><a class='button' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
+                        "<td class='event-data ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
                         "</tr>"
                     );
                 };
@@ -161,7 +161,7 @@ $(document).ready(function () {
         document.addEventListener('click', function(e) {
             e.preventDefault();
             console.log(e.target.className);
-            if(e.target.className === 'ticket-click') {
+            if(e.target.className === 'button ticket-click') {
                 database.ref('Gigify/tickclick/').once('value', function(snapshot) {
                     countTrack = snapshot.val().count;
                     ++countTrack;
