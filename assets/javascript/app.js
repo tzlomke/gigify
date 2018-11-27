@@ -22,11 +22,28 @@
 // Query AJAX for artist ID AJAX query to spotify using 'search'
 // Utilize artist ID for widget
 
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyC88VWTxZ8bT_lApnGOVR-Rr2zuNSY-qss",
+    authDomain: "bootcamp-a18e5.firebaseapp.com",
+    databaseURL: "https://bootcamp-a18e5.firebaseio.com",
+    projectId: "bootcamp-a18e5",
+    storageBucket: "bootcamp-a18e5.appspot.com",
+    messagingSenderId: "995593097318"
+};
+
+firebase.initializeApp(config);
+
+var database = firebase.database();
+
 // Bandsintown App ID
 var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
 
 // Array of Data Returned from Spotify
 var spotifyArray = [];
+
+// Ticket click variable
+var countTrack = 0;
 
 $(document).ready(function () {
     var URL = document.URL;
@@ -95,6 +112,7 @@ $(document).ready(function () {
                     };
                 });
 
+                
                 console.log(spotifyArray);
 
                 // Artist Table Creation
@@ -139,6 +157,19 @@ $(document).ready(function () {
                     );
                 };
             });
+        });
+        document.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log(e.target.className);
+            if(e.target.className === 'ticket-click') {
+                database.ref('Gigify/tickclick/').once('value', function(snapshot) {
+                    countTrack = snapshot.val().count;
+                    ++countTrack;
+                    database.ref('Gigify/tickclick/').update({
+                        count: countTrack,
+                    });
+                });
+            };
         });
     };
 });
