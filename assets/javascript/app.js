@@ -22,15 +22,11 @@
 // Query AJAX for artist ID AJAX query to spotify using 'search'
 // Utilize artist ID for widget
 
-// Spotify Array
-var favoriteArtists = [];
-
-// Bandsintown Variables and Arrays
+// Bandsintown App ID
 var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
-var BITObjectArray = [];
 
-// Combined Array of Spotify and Bandsintown Data
-var combinedArray = [];
+// Array of Data Returned from Spotify
+var spotifyArray = [];
 
 $(document).ready(function () {
     var URL = document.URL;
@@ -38,119 +34,114 @@ $(document).ready(function () {
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
 
-        // Main page hidden
+        // Main Page Hidden
         $("#main-page").css("display", "none");
 
-        // Click event for log in
+        // Click Event For Login
         $('.spotify-link').on('click', function () {
             $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
-
-
-        })
+        });
 
         // Else statement (condition: access token in string). Main page functionality will occur within
     } else {
 
-        // Landing page hidden
+        // Landing Page Hidden
         $("#landing-page").css("display", "none");
 
         // Split URL multiple times so that only the characters of the token are returned in the end. (Spotify will only allow access to user profile if token is passed in as a "header" in AJAX call, see below).
-        // (There's probably a DRYer way to do this, but this is what I came up with)
+        // (There's probably a DRYer way to do this, but this worked for now)
         var tokenArray = URL.split("#");
         var splitTokenArray = tokenArray[1].split("&");
-        console.log(splitTokenArray);
-        finalTokenArray = splitTokenArray[0].split("=");
-        console.log(finalTokenArray);
+        var finalTokenArray = splitTokenArray[0].split("=");
         var client_token = finalTokenArray[1];
-        console.log(client_token);
-    
 
         // Spotify AJAX call
         function spotifyAPICall() {
             var queryURL = "https://api.spotify.com/v1/me/top/artists";
-            console.log(queryURL);
             $.ajax({
                 url: queryURL,
                 method: "GET",
-                // Auth token passed to Spotify here
+                // Auth Token Passed to Spotify Here
                 headers: {
                     "Authorization": "Bearer " + client_token
                 }
             }).then(function (response) {
-                console.log(response);
                 var results = response.items;
-                console.log(results)
                 // For loop to push user favorite artist names, IDs and images into arrays
                 for (var i = 0; i < results.length; i++) {
-                    combinedArray.push({
+                    spotifyArray.push({
                         artistName: results[i].name,
                         spotifyID: results[i].id,
-                        // Empty array to be populated with data from Bandsintown AJAX
-                        eventData: []
                     });
-                    favoriteArtists.push(results[i].name);
                 };
-                console.log(combinedArray);
 
-                $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + combinedArray[0].spotifyID);
+                $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + spotifyArray[0].spotifyID);
 
-                // For loop to pass favoriteArtists array as query to Bandsintown API
-                function runLoop(response) {
-                    var i = 0;
-                    
-                    function next () {
-                        if (i < response.length) {
-                            return $.ajax({
-                                url: "https://rest.bandsintown.com/artists/" + response[i] + "/events?app_id=" + BIT_Id,
-                                method: "GET",
-                                ajaxI: response[i]
-                            }).then(function (response) {
-                                console.log(response);
-                                var name = this.ajaxI;
-                                // Sets each response as element of BITObjectArray (an array of JSON-style objects) so that we can pull this data to populate our page
-                                BITObjectArray.push({
-                                    artistName: name,
-                                    events: response
-                                });
-                                // Adds eventData to the combined array
-                                combinedArray[i].eventData = response;
-                                ++i;
-                                return next();
-                            });
-                        };
+                // Calls Bandsintown for Top Artist Returned From Spotify
+                $.ajax({
+                    url: "https://rest.bandsintown.com/artists/" + spotifyArray[0].artistName + "/events?app_id=" + BIT_Id,
+                    method: "GET"
+                }).then(function (response) {
+                    // Event Table Creation for Top Artist
+                    for (var i = 0; i < response.length; i++) {
+                        $("#event-table").append("<tr class='event-data'>" +
+                            "<td class='venue'>" + response[i].venue.name + "</td>" +
+                            "<td class='city'>" + response[i].venue.city + "</td>" +
+                            "<td class='country'>" + response[i].venue.country + "</td>" +
+                            "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                            "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
+                            "</tr>"
+                        );
                     };
-                    return next();
-                };
-
-                runLoop(favoriteArtists).then(function (){
-                    
                 });
 
-                console.log(combinedArray);
-
-
+                console.log(spotifyArray);
 
                 // Artist Table Creation
-                for (var i = 0; i < combinedArray.length; i++) {
-                    $("#artist-table").append("<tr class='artist-name' id=" 
-                        + combinedArray[i].spotifyID + "><td>"
-                        + combinedArray[i].artistName + "</td></tr>");
-                };                
-            })
+                for (var i = 0; i < spotifyArray.length; i++) {
+                    $("#artist-table").append("<tr class='artist-name' id=" +
+                        spotifyArray[i].spotifyID + "><td>" +
+                        spotifyArray[i].artistName + "</td></tr>");
+                };
+            });
         };
 
         // Run Spotify API call function
         spotifyAPICall();
 
+
+
         // Click Events for Artist Table Rows
-        $(document).on("click", "#artist-table tr.artist-name", function() {
+        $(document).on("click", "#artist-table tr.artist-name", function () {
+            
+            var queryURL2 = "https://rest.bandsintown.com/artists/" + this.textContent + "/events?app_id=" + BIT_Id;
 
             // Pass Selected Artist to Spotify Player
             $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id);
             
+            // Clears Out Old Table
+            $("#event-table .event-data").remove();
+
+            // New Bandsintown AJAX Call
+            $.ajax({
+                url: queryURL2,
+                method: "GET"
+            }).then(function (response) {
+                // New Event Table Creation
+                for (var i = 0; i < response.length; i++) {
+                    $("#event-table").append("<tr class='event-data'>" +
+                        "<td class='event-data venue'>" + response[i].venue.name + "</td>" +
+                        "<td class='event-data city'>" + response[i].venue.city + "</td>" +
+                        "<td class='event-data country'>" + response[i].venue.country + "</td>" +
+                        "<td class='event-data date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                        "<td class='event-data ticket-link'><a class='button' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
+                        "</tr>"
+                    );
+                };
+            });
         });
-    }
-})
+    };
+});
 
 
 
