@@ -19,6 +19,8 @@
     <script src="https://use.fontawesome.com/9b7fd42174.js"></script>
     <!-- jQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 </head>
 <body>
 
@@ -67,20 +69,20 @@
                     <div class="columns">
 
                         <div class="column">
-                            <table class="table" id="artist-table">
-                                <thead>
-                                    <tr id="artist-column">
+                            <table class="table">
+                                <thead id="artist-column">
+                                    <tr>
                                         <th>Artist</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="artist-table">
                                     
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="column">
-                            <table id="event-table">
+                            <table class="table">
                                 <thead>
                                     <tr id="event-headers">
                                         <th>Venue</th>
@@ -90,6 +92,9 @@
                                         <th>Tickets</th>
                                     </tr>
                                 </thead>
+                                <tbody id="event-table">
+
+                                </tbody>
                             </table>
                         </div>
 
@@ -98,7 +103,7 @@
 
                 <div class="column is-one-third level-right">
                     <div>
-                        <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        <iframe width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                     </div>
                 </div>
 
