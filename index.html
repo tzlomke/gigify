@@ -25,31 +25,14 @@
     <!-- Landing Page -->
     <section class="section level" id="landing-page">
         <div class="container level-item">
-                
-            <!-- delete after testing -->
-            <button class="API_test">Click</button> 
 
             <div class="columns landing-page">
                 <div class="column landing-page">
                     <div class="card start-card">
-                        <br>
                         <div class="card-content">
                             <h1 class="logo">Gigify</h1> 
 
                             <br><br><br>
-                            
-                            <div class="animated-search">
-                                    <div class="container-2">
-                                        <span class="icon"><i class="fa fa-search">&nbsp;&nbsp;&nbsp;</i></span>
-                                        <input type="search" id="search" placeholder=" Search for a band or artist..." />
-                                    </div>
-                            </div>
-
-                            <br><br>
-
-                            <h4>- OR -</h4>
-
-                            <br>
 
                             <a class="button spotify-link"><i class="fa fa-spotify" aria-hidden="true"></i> Link to your Spotify Account</a>
                         </div>
@@ -80,13 +63,40 @@
         <div class="container level-item">
             <div class="columns">
                 
-                <div class="column level-left">
-                    <div>
-                        <p>This is content</p>
+                <div class="column is-two-thirds level-left">
+                    <div class="columns">
+
+                        <div class="column">
+                            <table class="table" id="artist-table">
+                                <thead>
+                                    <tr id="artist-column">
+                                        <th>Artist</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="column">
+                            <table id="event-table">
+                                <thead>
+                                    <tr id="event-headers">
+                                        <th>Venue</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Date</th>
+                                        <th>Tickets</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="column level-right">
+                <div class="column is-one-third level-right">
                     <div>
                         <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                     </div>
@@ -95,7 +105,9 @@
             </div>
         </div>
     </section>
-
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <!-- app.js -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
 </html>
