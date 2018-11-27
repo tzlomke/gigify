@@ -55,7 +55,6 @@ $(document).ready(function () {
         var finalTokenArray = splitTokenArray[0].split("=");
         var client_token = finalTokenArray[1];
 
-
         // Spotify AJAX call
         function spotifyAPICall() {
             var queryURL = "https://api.spotify.com/v1/me/top/artists";
