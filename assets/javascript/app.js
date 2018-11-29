@@ -99,16 +99,57 @@ $(document).ready(function () {
                     url: "https://rest.bandsintown.com/artists/" + spotifyArray[0].artistName + "/events?app_id=" + BIT_Id,
                     method: "GET"
                 }).then(function (response) {
-                    // Event Table Creation for Top Artist
-                    for (var i = 0; i < response.length; i++) {
-                        $("#event-table").append("<tr class='event-data'>" +
-                            "<td class='venue'>" + response[i].venue.name + "</td>" +
-                            "<td class='city'>" + response[i].venue.city + "</td>" +
-                            "<td class='country'>" + response[i].venue.country + "</td>" +
-                            "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                            "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
+                    // Event Table Creation for Top Artist Ordered with In-State Events First
+                    var inRegionObjectArray = [];
+                    var outRegionObjectArray = [];
+                    for(var i = 0; i < response.length; i++) {
+                        var venue_name = response[i].venue.name;
+                        var venue_city = response[i].venue.city;
+                        var venue_country = response[i].venue.country;
+                        var venue_date = moment(response[i].datetime).format('dddd, MMMM Do YYYY');
+                        var ticketLink = response[i].offers[0].url;
+                        var venue_region = response[i].venue.region;
+                        if(venue_region === region_up) {
+                            inRegionObjectArray.push( {
+                                name: venue_name,
+                                city: venue_city,
+                                country: venue_country,
+                                date: venue_date,
+                                ticket: ticketLink,
+                            });
+                        } else {
+                            outRegionObjectArray.push( {
+                                name: venue_name,
+                                city: venue_city,
+                                country: venue_country,
+                                date: venue_date,
+                                ticket: ticketLink,
+                            });
+                        };
+                    };
+                    if(inRegionObjectArray[0] !== -1) {
+                        for(var i = 0; i < inRegionObjectArray.length; i++) {
+                            $("#event-table").append("<tr class='event-data'>" +
+                            "<td class='venue'>" + inRegionObjectArray[i].name + "</td>" +
+                            "<td class='city'>" + inRegionObjectArray[i].city + "</td>" +
+                            "<td class='country'>" + inRegionObjectArray[i].country + "</td>" +
+                            "<td class='date'>" + inRegionObjectArray[i].date + "</td>" +
+                            "<td class='ticket-link'><a class='button' href=" + inRegionObjectArray[i].ticket + ">Get Tickets</a></td>" +
                             "</tr>"
-                        );
+                            );
+                        };
+                    };
+                    if(outRegionObjectArray[0] !== -1) {
+                        for(var i = 0; i < outRegionObjectArray.length; i++) {
+                            $("#event-table").append("<tr class='event-data'>" +
+                            "<td class='venue'>" + outRegionObjectArray[i].name + "</td>" +
+                            "<td class='city'>" + outRegionObjectArray[i].city + "</td>" +
+                            "<td class='country'>" + outRegionObjectArray[i].country + "</td>" +
+                            "<td class='date'>" + outRegionObjectArray[i].date + "</td>" +
+                            "<td class='ticket-link'><a class='button' href=" + outRegionObjectArray[i].ticket + ">Get Tickets</a></td>" +
+                            "</tr>"
+                            );
+                        };
                     };
                 });
 
