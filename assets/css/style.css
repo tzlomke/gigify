@@ -122,7 +122,7 @@ html, body {
 .container-2 .icon {
     position: absolute;
     top: 50%;
-    margin-left: 20px;
+    margin-left: 12px;
     margin-top: 12px;
     z-index: 1;
     color: #4f5b66;
