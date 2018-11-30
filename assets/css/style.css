@@ -26,6 +26,20 @@ html, body {
     padding: 0;
 }
 
+.logo-div {
+    height: 200px;
+}
+
+.search-div {
+    display: flex;
+    height: 100px;
+    align-content: center;
+}
+
+.spotify-link-div {
+    height: 100px;
+}
+
 /* Main Page Styling */
 #main-page {
     height: 100vh;
@@ -64,11 +78,25 @@ html, body {
     text-align: center;
 }
 
+/* Content Page Styling */
+.content-container {
+    margin-left: 5px;
+}
+
+.artist-div {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 /* Animated Search Bar */
+.nav-search {
+    float: right;
+}
 .animated-search {
-    display: inline-block;
+    display: block;
     width: inherit;
     margin: auto;
+    margin-top: 15px;
 }
 
 .container-2 {
@@ -89,7 +117,7 @@ html, body {
     font-size: 16px;
     float: left;
     color: #262626;
-    padding-left: 35px;
+    padding-left: 40px;
     padding-right: 10px;
     -webkit-border-radius: 500px;
     -moz-border-radius: 500px;
@@ -123,23 +151,27 @@ html, body {
     position: absolute;
     top: 50%;
     margin-left: 12px;
-    margin-top: 12px;
+    margin-top: 13px;
     z-index: 1;
     color: #4f5b66;
 }
 
 .container-2 input#search:focus, .container-2 input#search:active{
     outline:none;
-    width: 265px;
+    width: 275px;
     color: #ffffff;
 }
    
 .container-2:hover input#search {
-    width: 265px;
+    width: 275px;
     color: #ffffff;
 }
    
 .container-2:hover .icon {
+    color: #ffffff;
+}
+
+.focus-in {
     color: #ffffff;
 }
 
@@ -158,16 +190,23 @@ html, body {
     padding-bottom: 37px;
 }
 
+.button {
+    background-color: #1DB855;
+    border: none;
+}
+
 /* Navbar Style */
 .navbar {
     background: #4f5b66;
     padding-left: 20px;
     padding-right: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     height: 80px;
 }
 
 .navbar-brand {
+    display: inline-block;
+    width: 150px;
     margin: 0px;
 }
 
@@ -179,4 +218,67 @@ html, body {
 
 .nav-search {
     margin-right: 0px;
+}
+
+/* General Table Styling */
+table, th {
+    border-bottom: 1px, solid, #4f5b66;
+}
+
+th {
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+
+/* Artist Table */
+.table-heading {
+    font-size: 28px;
+    font-weight: bolder;
+    color: white;
+}
+
+.artist-name {
+    color: rgba(255, 255, 255, .6);
+    background-color: 0, 0, 0;
+}
+
+.artist-name:hover {
+    color: rgba(29, 184, 85, .6);
+    cursor: pointer;
+}
+
+.selected {
+    color: rgba(29, 184, 85, 1);
+}
+
+.artist-name-data {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+/* Event Table */
+#event-table {
+    table-layout: auto;
+    width: 500px;
+}
+
+.event-div {
+    height: calc(100vh - 80px);
+}
+
+.event-data {
+    color: rgba(255, 255, 255, .6);
+}
+
+.event-data:hover {
+    color: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+}
+
+/* Spotify Player Column */
+.spotify-player-div {
+    padding-top: 30px;
 }

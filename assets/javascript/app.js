@@ -9,6 +9,11 @@ var spotifyArray = [];
 
 $(document).ready(function () {
 
+    // Changes Icons to White When Search Bars Are Hovered
+    $("#search").hover(function() {
+        $(".icon").css("color", "#ffffff");
+    });
+
     // Changes Icons to White When Search Bars Are Active
     $("#search").focus(function() {
         $(".icon").css("color", "#ffffff");
@@ -28,7 +33,9 @@ $(document).ready(function () {
         $("#main-page").css("display", "none");
 
         // Click Event For Login
-        $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
+        $('.spotify-link').on('click', function () {
+           $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
+       });
 
         // Else statement (condition: access token in string). Main page functionality will occur within
     } else {
@@ -72,7 +79,7 @@ $(document).ready(function () {
                 }).then(function (response) {
                     // Event Table Creation for Top Artist
                     for (var i = 0; i < response.length; i++) {
-                        $("#event-table-body").append("<tr class='event-data'>" +
+                        $("#event-table").append("<tr class='event-data'>" +
                             "<td class='venue'>" + response[i].venue.name + "</td>" +
                             "<td class='city'>" + response[i].venue.city + "</td>" +
                             "<td class='country'>" + response[i].venue.country + "</td>" +
@@ -88,7 +95,7 @@ $(document).ready(function () {
                 // Artist Table Creation
                 for (var i = 0; i < spotifyArray.length; i++) {
                     $("#artist-table").append("<tr class='artist-name' id=" +
-                        spotifyArray[i].spotifyID + "><td class='artist-name-data'>" +
+                        spotifyArray[i].spotifyID + "><td>" +
                         spotifyArray[i].artistName + "</td></tr>");
                 };
             });
