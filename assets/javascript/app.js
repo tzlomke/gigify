@@ -1,3 +1,4 @@
+
 // Input function ()
 // search form
 // input field for searching artist names- store input as variable
@@ -42,12 +43,25 @@ var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
 // Array of Data Returned from Spotify
 var spotifyArray = [];
 
+
 // Ticket click variable
 var countTrack = 0;
 
-$(document).ready(function () {
-    var URL = document.URL;
 
+$(document).ready(function () {
+
+    // Changes Icons to White When Search Bars Are Active
+    $("#search").focus(function() {
+        $(".icon").css("color", "#ffffff");
+    });
+
+    // Changes Icons Back to Original Color When Search Bar is Inactive
+    $('#search').focusout("focus", function () {
+        $(".icon").css("color", "#4f5b66");
+    });
+
+    var URL = document.URL;
+    
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
 
@@ -99,6 +113,7 @@ $(document).ready(function () {
                     url: "https://rest.bandsintown.com/artists/" + spotifyArray[0].artistName + "/events?app_id=" + BIT_Id,
                     method: "GET"
                 }).then(function (response) {
+                  
                     // Event Table Creation for Top Artist Ordered with In-State Events First
                     var inRegionObjectArray = [];
                     var outRegionObjectArray = [];
@@ -168,16 +183,65 @@ $(document).ready(function () {
         // Run Spotify API call function
         spotifyAPICall();
 
-
+        // Search Function
+        function searchArtists() {
+            event.preventDefault();
+            var userInput = $("#search").val().trim().toString();
+            console.log(userInput);
+            var queryURL1 = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&${client_token}`;
+            console.log(queryURL1);
+            $.ajax({
+                url: queryURL1,
+                method: "GET",
+                // Auth Token Passed to Spotify Here
+                headers: {
+                    "Authorization": "Bearer " + client_token
+                }
+            }).then(function (response) {
+                var results1 = response.artists.items[0].id;
+                console.log(results1);
+                // passes data to Spotify music player
+                $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + results1);
+                if (response.error != -1) {
+                    // Invalid Search Error Modal
+                    $("#invalidOpenModal").addClass("is-active");
+                    $("#invalidCloseModal").click(function () {
+                        $("#invalidOpenModal").removeClass("is-active");
+                    });
+                };
+                $("#artist-table").prepend("<tr class='artist-name' id=" +
+                        response.artists.items[0].id + "><td>" +
+                        response.artists.items[0].name + "</td></tr>")
+            });
+        };
+        
+        // Keystroke event to launch search
+        $("#search").keypress(function (e) {
+            var userInput = $("#search").val().trim().toString();
+            var key = e.which || e.keyCode;
+            console.log(key);
+            if (key === 13 && userInput === "") {
+                // Empty Search Bar Error Modal
+                $("#emptyOpenModal").addClass("is-active");
+                $("#emptyCloseModal").click(function () {
+                    $("#emptyOpenModal").removeClass("is-active");
+                });
+            } else if (key === 13) {
+                searchArtists();
+            }
+        });
 
         // Click Events for Artist Table Rows
-        $(document).on("click", "#artist-table tr.artist-name", function () {
-            
+        $(document).on("click", "#artist-table .artist-name", function () {
+
+            // Adds Class To Show Selected
+            $(this).addClass("selected").siblings().removeClass("selected");
+
             var queryURL2 = "https://rest.bandsintown.com/artists/" + this.textContent + "/events?app_id=" + BIT_Id;
 
             // Pass Selected Artist to Spotify Player
             $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id);
-            
+
             // Clears Out Old Table
             $("#event-table .event-data").remove();
 
@@ -214,6 +278,8 @@ $(document).ready(function () {
         });
     };
 });
+
+
 
 
 
