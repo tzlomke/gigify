@@ -1,10 +1,51 @@
+
+// Input function ()
+// search form
+// input field for searching artist names- store input as variable
+// submit button - click event
+// input validation with modal - if/else
+
+// make ajax calls
+// bands in town - push object data into arrays for later for loop
+// spotify -push object data into widget
+
+// else    //  Output function ()
+// clear previous data
+// for loop {}  to create output table for results from bands in town
+// filter down by date
+// include link to purchase tickets
+
+// push artist id into spotify widget
+
+
+// band, date, venue, ticket
+
+// Query AJAX for artist ID AJAX query to spotify using 'search'
+// Utilize artist ID for widget
+
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyC88VWTxZ8bT_lApnGOVR-Rr2zuNSY-qss",
+    authDomain: "bootcamp-a18e5.firebaseapp.com",
+    databaseURL: "https://bootcamp-a18e5.firebaseio.com",
+    projectId: "bootcamp-a18e5",
+    storageBucket: "bootcamp-a18e5.appspot.com",
+    messagingSenderId: "995593097318"
+};
+
+firebase.initializeApp(config);
+
+var database = firebase.database();
+
 // Bandsintown App ID
 var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
 
 // Array of Data Returned from Spotify
 var spotifyArray = [];
 
-// Client Token Grabber
+
+// Ticket click variable
+var countTrack = 0;
 
 
 $(document).ready(function () {
@@ -72,19 +113,62 @@ $(document).ready(function () {
                     url: "https://rest.bandsintown.com/artists/" + spotifyArray[0].artistName + "/events?app_id=" + BIT_Id,
                     method: "GET"
                 }).then(function (response) {
-                    // Event Table Creation for Top Artist
-                    for (var i = 0; i < response.length; i++) {
-                        $("#event-table").append("<tr class='event-data'>" +
-                            "<td class='venue'>" + response[i].venue.name + "</td>" +
-                            "<td class='city'>" + response[i].venue.city + "</td>" +
-                            "<td class='country'>" + response[i].venue.country + "</td>" +
-                            "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                            "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                  
+                    // Event Table Creation for Top Artist Ordered with In-State Events First
+                    var inRegionObjectArray = [];
+                    var outRegionObjectArray = [];
+                    for(var i = 0; i < response.length; i++) {
+                        var venue_name = response[i].venue.name;
+                        var venue_city = response[i].venue.city;
+                        var venue_country = response[i].venue.country;
+                        var venue_date = moment(response[i].datetime).format('dddd, MMMM Do YYYY');
+                        var ticketLink = response[i].offers[0].url;
+                        var venue_region = response[i].venue.region;
+                        if(venue_region === region_up) {
+                            inRegionObjectArray.push( {
+                                name: venue_name,
+                                city: venue_city,
+                                country: venue_country,
+                                date: venue_date,
+                                ticket: ticketLink,
+                            });
+                        } else {
+                            outRegionObjectArray.push( {
+                                name: venue_name,
+                                city: venue_city,
+                                country: venue_country,
+                                date: venue_date,
+                                ticket: ticketLink,
+                            });
+                        };
+                    };
+                    if(inRegionObjectArray[0] !== -1) {
+                        for(var i = 0; i < inRegionObjectArray.length; i++) {
+                            $("#event-table").append("<tr class='event-data'>" +
+                            "<td class='venue'>" + inRegionObjectArray[i].name + "</td>" +
+                            "<td class='city'>" + inRegionObjectArray[i].city + "</td>" +
+                            "<td class='country'>" + inRegionObjectArray[i].country + "</td>" +
+                            "<td class='date'>" + inRegionObjectArray[i].date + "</td>" +
+                            "<td class='ticket-link'><a class='button' href=" + inRegionObjectArray[i].ticket + ">Get Tickets</a></td>" +
                             "</tr>"
-                        );
+                            );
+                        };
+                    };
+                    if(outRegionObjectArray[0] !== -1) {
+                        for(var i = 0; i < outRegionObjectArray.length; i++) {
+                            $("#event-table").append("<tr class='event-data'>" +
+                            "<td class='venue'>" + outRegionObjectArray[i].name + "</td>" +
+                            "<td class='city'>" + outRegionObjectArray[i].city + "</td>" +
+                            "<td class='country'>" + outRegionObjectArray[i].country + "</td>" +
+                            "<td class='date'>" + outRegionObjectArray[i].date + "</td>" +
+                            "<td class='ticket-link'><a class='button' href=" + outRegionObjectArray[i].ticket + ">Get Tickets</a></td>" +
+                            "</tr>"
+                            );
+                        };
                     };
                 });
 
+                
                 console.log(spotifyArray);
 
                 // Artist Table Creation
@@ -173,11 +257,24 @@ $(document).ready(function () {
                         "<td class='event-data city'>" + response[i].venue.city + "</td>" +
                         "<td class='event-data country'>" + response[i].venue.country + "</td>" +
                         "<td class='event-data date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                        "<td class='event-data ticket-link'><a class='button' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
+                        "<td class='event-data ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
                         "</tr>"
                     );
                 };
             });
+        });
+        document.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log(e.target.className);
+            if(e.target.className === 'button ticket-click') {
+                database.ref('Gigify/tickclick/').once('value', function(snapshot) {
+                    countTrack = snapshot.val().count;
+                    ++countTrack;
+                    database.ref('Gigify/tickclick/').update({
+                        count: countTrack,
+                    });
+                });
+            };
         });
     };
 });
