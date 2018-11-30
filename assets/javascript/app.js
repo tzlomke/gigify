@@ -189,15 +189,9 @@ $(document).ready(function () {
 
                 // Artist Table Creation
                 for (var i = 0; i < spotifyArray.length; i++) {
-                    if (i = 1) {
-                        $("#artist-table").append("<tr class='artist-name selected' id=" +
+                    $("#artist-table").append("<tr class='artist-name' id=" +
                         spotifyArray[i].spotifyID + "><td class='artist-name-data'>" +
                         spotifyArray[i].artistName + "</td></tr>");
-                    } else {
-                        $("#artist-table").append("<tr class='artist-name' id=" +
-                        spotifyArray[i].spotifyID + "><td class='artist-name-data'>" +
-                        spotifyArray[i].artistName + "</td></tr>");
-                    };
                 };
             });
         };
@@ -228,10 +222,9 @@ $(document).ready(function () {
                         $("#invalidOpenModal").removeClass("is-active");
                     });
                 };
-                $("#artist-table").children().removeClass("selected").prepend(
-                    "<tr class='artist-name selected' id=" +
+                $("#artist-table").prepend("<tr class='artist-name' id=" +
                     response.artists.items[0].id + "><td>" +
-                    response.artists.items[0].name + "</td></tr>");
+                    response.artists.items[0].name + "</td></tr>")
             });
         };
 
