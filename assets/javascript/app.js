@@ -61,7 +61,37 @@ $(document).ready(function () {
     });
 
     var URL = document.URL;
-    
+
+    // Sterilize data both from user, and from BIT
+    function stateInputSterilizer(stateInput, who) {
+        var stateCheck = stateInput.toUpperCase().trim();
+        var stateName = ['ALABAMA', 'ALASKA', 'ARIZONA', 'ARKANSAS', 'CALIFORNIA', 'COLORADO', 'CONNECTICUT', 'DELAWARE', 
+            'DISTRICT OF COLUMBIA', 'FLORIDA', 'GEORGIA', 'HAWAII', 'IDAHO', 'ILLINOIS', 'INDIANA', 'IOWA', 'KANSAS', 'KENTUCKY',
+            'LOUISIANA', 'MAINE', 'MARYLAND', 'MASSACHUSETTS', 'MICHIGAN', 'MINNESOTA', 'MISSISSIPPI', 'MISSOURI', 'MONTANA', 
+            'NEBRASKA', 'NEVADA', 'NEW HAMPSHIRE', 'NEW JERSEY', 'NEW MEXICO', 'NEW YORK', 'NORTH CAROLINA', 'NORTH DAKOTA',
+            'OHIO', 'OKLAHOMA', 'OREGON', 'PENNSYLVANIA', 'PUERTO RICO', 'RHODE ISLAND', 'SOUTH CAROLINA', 'SOUTH DAKOTA',
+            'TENNESSEE', 'TEXAS', 'UTAH', 'VERMONT', 'VIRGINIA', 'VIRGIN ISLANDS', 'WASHINGTON', 'WEST VIRGINIA', 'WISCONSIN',
+            'WYOMING'];
+        var stateAbbrev = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS',
+            'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH',
+            'OK', 'OR', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'VI', 'WA', 'WV', 'WI', 'WY'];
+        if(stateAbbrev.includes(stateInput)) {
+            if(who === 'user') {
+                return stateInput;
+            } else if(who === 'BIT'); {
+                return stateInput;
+            };
+        } else {
+            var indexNum = stateName.indexOf(stateCheck);
+            if(who === 'user' && indexNum !== -1) {
+                return stateAbbrev[indexNum];
+            } else if(who === 'BIT' && indexNum !== -1); {
+                return stateAbbrev[indexNum];
+            };
+        };
+    };
+
+
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
 
@@ -124,7 +154,8 @@ $(document).ready(function () {
                         var venue_date = moment(response[i].datetime).format('dddd, MMMM Do YYYY');
                         var ticketLink = response[i].offers[0].url;
                         var venue_region = response[i].venue.region;
-                        if(venue_region === region_up) {
+                        var venueRegionSterile = stateInputSterilizer(venue_region, 'BIT');
+                        if(venueRegionSterile === userRegionSterile) {
                             inRegionObjectArray.push( {
                                 name: venue_name,
                                 city: venue_city,
@@ -143,30 +174,26 @@ $(document).ready(function () {
                         };
                     };
                     if(inRegionObjectArray[0] !== -1) {
-                        for(var i = 0; i < inRegionObjectArray.length; i++) {
-                            $("#event-table").append("<tr class='event-data'>" +
-                            "<td class='venue'>" + inRegionObjectArray[i].name + "</td>" +
-                            "<td class='city'>" + inRegionObjectArray[i].city + "</td>" +
-                            "<td class='country'>" + inRegionObjectArray[i].country + "</td>" +
-                            "<td class='date'>" + inRegionObjectArray[i].date + "</td>" +
-                            "<td class='ticket-link'><a class='button' href=" + inRegionObjectArray[i].ticket + ">Get Tickets</a></td>" +
-                            "</tr>"
-                            );
-                        };
+                        tableBuild(inRegionObjectArray);
                     };
                     if(outRegionObjectArray[0] !== -1) {
-                        for(var i = 0; i < outRegionObjectArray.length; i++) {
+                        tableBuild(outRegionObjectArray);
+                    };
+                    function tableBuild(array) {
+                        for(var i = 0; i < array.length; i++) {
                             $("#event-table").append("<tr class='event-data'>" +
-                            "<td class='venue'>" + outRegionObjectArray[i].name + "</td>" +
-                            "<td class='city'>" + outRegionObjectArray[i].city + "</td>" +
-                            "<td class='country'>" + outRegionObjectArray[i].country + "</td>" +
-                            "<td class='date'>" + outRegionObjectArray[i].date + "</td>" +
-                            "<td class='ticket-link'><a class='button' href=" + outRegionObjectArray[i].ticket + ">Get Tickets</a></td>" +
+                            "<td class='venue'>" + array[i].name + "</td>" +
+                            "<td class='city'>" + array[i].city + "</td>" +
+                            "<td class='country'>" + array[i].country + "</td>" +
+                            "<td class='date'>" + array[i].date + "</td>" +
+                            "<td class='ticket-link'><a class='button' href=" + array[i].ticket + ">Get Tickets</a></td>" +
                             "</tr>"
                             );
                         };
                     };
                 });
+            });
+        };
 
                 
                 console.log(spotifyArray);
@@ -177,8 +204,6 @@ $(document).ready(function () {
                         spotifyArray[i].spotifyID + "><td>" +
                         spotifyArray[i].artistName + "</td></tr>");
                 };
-            });
-        };
 
         // Run Spotify API call function
         spotifyAPICall();
@@ -251,18 +276,54 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
                 // New Event Table Creation
-                for (var i = 0; i < response.length; i++) {
+                var inRegionObjectArray = [];
+            var outRegionObjectArray = [];
+            for(var i = 0; i < response.length; i++) {
+                var venue_name = response[i].venue.name;
+                var venue_city = response[i].venue.city;
+                var venue_country = response[i].venue.country;
+                var venue_date = moment(response[i].datetime).format('dddd, MMMM Do YYYY');
+                var ticketLink = response[i].offers[0].url;
+                var venue_region = response[i].venue.region;
+                var venueRegionSterile = stateInputSterilizer(venue_region, 'BIT');
+                if(venueRegionSterile === userRegionSterile) {
+                    inRegionObjectArray.push( {
+                        name: venue_name,
+                        city: venue_city,
+                        country: venue_country,
+                        date: venue_date,
+                        ticket: ticketLink,
+                    });
+                } else {
+                    outRegionObjectArray.push( {
+                        name: venue_name,
+                        city: venue_city,
+                        country: venue_country,
+                        date: venue_date,
+                        ticket: ticketLink,
+                    });
+                };
+            };
+            if(inRegionObjectArray[0] !== -1) {
+                tableBuild(inRegionObjectArray);
+            };
+            if(outRegionObjectArray[0] !== -1) {
+                tableBuild(outRegionObjectArray);
+            };
+            function tableBuild(array) {
+                for(var i = 0; i < array.length; i++) {
                     $("#event-table").append("<tr class='event-data'>" +
-                        "<td class='event-data venue'>" + response[i].venue.name + "</td>" +
-                        "<td class='event-data city'>" + response[i].venue.city + "</td>" +
-                        "<td class='event-data country'>" + response[i].venue.country + "</td>" +
-                        "<td class='event-data date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                        "<td class='event-data ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
-                        "</tr>"
+                    "<td class='venue'>" + array[i].name + "</td>" +
+                    "<td class='city'>" + array[i].city + "</td>" +
+                    "<td class='country'>" + array[i].country + "</td>" +
+                    "<td class='date'>" + array[i].date + "</td>" +
+                    "<td class='ticket-link'><a class='button' href=" + array[i].ticket + ">Get Tickets</a></td>" +
+                    "</tr>"
                     );
                 };
-            });
+            };
         });
+    });
         document.addEventListener('click', function(e) {
             e.preventDefault();
             console.log(e.target.className);
