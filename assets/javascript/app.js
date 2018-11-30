@@ -228,9 +228,10 @@ $(document).ready(function () {
                         $("#invalidOpenModal").removeClass("is-active");
                     });
                 };
-                $("#artist-table").prepend("<tr class='artist-name selected' id=" +
+                $("#artist-table").children().removeClass("selected").prepend(
+                    "<tr class='artist-name selected' id=" +
                     response.artists.items[0].id + "><td>" +
-                    response.artists.items[0].name + "</td></tr>").siblings().removeClass("selected");
+                    response.artists.items[0].name + "</td></tr>");
             });
         };
 
