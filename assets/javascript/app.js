@@ -4,18 +4,87 @@ var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
 // Array of Data Returned from Spotify
 var spotifyArray = [];
 
-// Client Token Grabber
+// State to Abbreviation Converter
+function abbrRegion(input, to) {
+    var regions = [
+        ['Alabama', 'AL'],
+        ['Alaska', 'AK'],
+        ['Arizona', 'AZ'],
+        ['Arkansas', 'AR'],
+        ['California', 'CA'],
+        ['Colorado', 'CO'],
+        ['Connecticut', 'CT'],
+        ['Delaware', 'DE'],
+        ['District Of Columbia', 'DC'],
+        ['Florida', 'FL'],
+        ['Georgia', 'GA'],
+        ['Guam', 'GU'],
+        ['Hawaii', 'HI'],
+        ['Idaho', 'ID'],
+        ['Illinois', 'IL'],
+        ['Indiana', 'IN'],
+        ['Iowa', 'IA'],
+        ['Kansas', 'KS'],
+        ['Kentucky', 'KY'],
+        ['Louisiana', 'LA'],
+        ['Maine', 'ME'],
+        ['Maryland', 'MD'],
+        ['Massachusetts', 'MA'],
+        ['Michigan', 'MI'],
+        ['Minnesota', 'MN'],
+        ['Mississippi', 'MS'],
+        ['Missouri', 'MO'],
+        ['Montana', 'MT'],
+        ['Nebraska', 'NE'],
+        ['Nevada', 'NV'],
+        ['New Hampshire', 'NH'],
+        ['New Jersey', 'NJ'],
+        ['New Mexico', 'NM'],
+        ['New York', 'NY'],
+        ['North Carolina', 'NC'],
+        ['North Dakota', 'ND'],
+        ['Ohio', 'OH'],
+        ['Oklahoma', 'OK'],
+        ['Oregon', 'OR'],
+        ['Pennsylvania', 'PA'],
+        ['Rhode Island', 'RI'],
+        ['South Carolina', 'SC'],
+        ['South Dakota', 'SD'],
+        ['Tennessee', 'TN'],
+        ['Texas', 'TX'],
+        ['Utah', 'UT'],
+        ['Vermont', 'VT'],
+        ['Virginia', 'VA'],
+        ['Washington', 'WA'],
+        ['West Virginia', 'WV'],
+        ['Wisconsin', 'WI'],
+        ['Wyoming', 'WY'],
+    ];
 
+    // Converts User Region Input to Proper Format
+    if (to == 'abbr') {
+        input = input.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+        for (i = 0; i < regions.length; i++) {
+            if (regions[i][0] == input) {
+                return (regions[i][1]);
+            }
+        }
+    } else if (to == 'name') {
+        input = input.toUpperCase();
+        for (i = 0; i < regions.length; i++) {
+            if (regions[i][1] == input) {
+                return (regions[i][0]);
+            };
+        };
+    };
+};
 
 $(document).ready(function () {
 
-    // Changes Icons to White When Search Bars Are Hovered
-    $("#search").hover(function() {
-        $(".icon").css("color", "#ffffff");
-    });
-
     // Changes Icons to White When Search Bars Are Active
-    $("#search").focus(function() {
+    $("#search").focus(function () {
         $(".icon").css("color", "#ffffff");
     });
 
@@ -24,18 +93,31 @@ $(document).ready(function () {
         $(".icon").css("color", "#4f5b66");
     });
 
+    // Saves Location to Local Storage and Logs In to Spotify
+    $(".spotify-link").on("click", function () {
+
+        // Converts Location Input to Proper Format
+        var toAbbreviated = abbrRegion($(".location-search").val().trim(), 'abbr');
+        var location = toAbbreviated;
+        localStorage.clear();
+        localStorage.setItem("location", location);
+        if (!$(".location-search").val()) {
+            $("#location-modal").addClass("is-active");
+            $(".modal-close").on("click", function () {
+                $("#location-modal").removeClass("is-active");
+            });
+        } else {
+            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
+        };
+    });
+
     var URL = document.URL;
-    
+
     // If Statement to check if user has not logged in to spotify (condition: access token not in url string)
     if ((URL).indexOf("access_token") === -1) {
 
         // Main Page Hidden
         $("#main-page").css("display", "none");
-
-        // Click Event For Login
-        $('.spotify-link').on('click', function () {
-           $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
-       });
 
         // Else statement (condition: access token in string). Main page functionality will occur within
     } else {
@@ -44,7 +126,6 @@ $(document).ready(function () {
         $("#landing-page").css("display", "none");
 
         // Split URL multiple times so that only the characters of the token are returned in the end. (Spotify will only allow access to user profile if token is passed in as a "header" in AJAX call, see below).
-        // (There's probably a DRYer way to do this, but this worked for now)
         var tokenArray = URL.split("#");
         var splitTokenArray = tokenArray[1].split("&");
         var finalTokenArray = splitTokenArray[0].split("=");
@@ -52,7 +133,7 @@ $(document).ready(function () {
 
         // Spotify AJAX call
         function spotifyAPICall() {
-            var queryURL = "https://api.spotify.com/v1/me/top/artists";
+            var queryURL = "https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=50";
             $.ajax({
                 url: queryURL,
                 method: "GET",
@@ -78,24 +159,38 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (response) {
                     // Event Table Creation for Top Artist
-                    for (var i = 0; i < response.length; i++) {
-                        $("#event-table").append("<tr class='event-data'>" +
-                            "<td class='venue'>" + response[i].venue.name + "</td>" +
-                            "<td class='city'>" + response[i].venue.city + "</td>" +
-                            "<td class='country'>" + response[i].venue.country + "</td>" +
-                            "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                            "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
-                            "</tr>"
-                        );
+                    if (response.length === 0) {
+                        $("#event-table-body").append("<tr><td colspan='5' class='event-data'>No scheduled dates :(</td></tr>")
+                    } else {
+                        for (var i = 0; i < response.length; i++) {
+                            // Places Local Shows First
+                            if (localStorage.getItem("location") === response[i].venue.region) {
+                                $("#event-table-body").prepend("<tr class='event-data near-you'>" +
+                                    "<td class='venue'>" + response[i].venue.name + "</td>" +
+                                    "<td class='city'>" + response[i].venue.city + "</td>" +
+                                    "<td class='country'>" + response[i].venue.country + "</td>" +
+                                    "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                                    "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                    "</tr>"
+                                );
+                            } else {
+                                $("#event-table-body").append("<tr class='event-data'>" +
+                                    "<td class='venue'>" + response[i].venue.name + "</td>" +
+                                    "<td class='city'>" + response[i].venue.city + "</td>" +
+                                    "<td class='country'>" + response[i].venue.country + "</td>" +
+                                    "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                                    "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                    "</tr>"
+                                );
+                            }
+                        };
                     };
                 });
-
-                console.log(spotifyArray);
 
                 // Artist Table Creation
                 for (var i = 0; i < spotifyArray.length; i++) {
                     $("#artist-table").append("<tr class='artist-name' id=" +
-                        spotifyArray[i].spotifyID + "><td>" +
+                        spotifyArray[i].spotifyID + "><td class='artist-name-data'>" +
                         spotifyArray[i].artistName + "</td></tr>");
                 };
             });
@@ -107,10 +202,8 @@ $(document).ready(function () {
         // Search Function
         function searchArtists() {
             event.preventDefault();
-            var userInput = $("#search").val().trim().toString();
-            console.log(userInput);
+            var userInput = $(".artist-search").val().trim().toString();
             var queryURL1 = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&${client_token}`;
-            console.log(queryURL1);
             $.ajax({
                 url: queryURL1,
                 method: "GET",
@@ -120,7 +213,6 @@ $(document).ready(function () {
                 }
             }).then(function (response) {
                 var results1 = response.artists.items[0].id;
-                console.log(results1);
                 // passes data to Spotify music player
                 $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + results1);
                 if (response.error != -1) {
@@ -131,21 +223,19 @@ $(document).ready(function () {
                     });
                 };
                 $("#artist-table").prepend("<tr class='artist-name' id=" +
-                        response.artists.items[0].id + "><td>" +
-                        response.artists.items[0].name + "</td></tr>")
+                    response.artists.items[0].id + "><td>" +
+                    response.artists.items[0].name + "</td></tr>")
             });
         };
-        
+
         // Keystroke event to launch search
-        $("#search").keypress(function (e) {
-            var userInput = $("#search").val().trim().toString();
+        $(".artist-search").keypress(function (e) {
             var key = e.which || e.keyCode;
-            console.log(key);
-            if (key === 13 && userInput === "") {
-                // Empty Search Bar Error Modal
-                $("#emptyOpenModal").addClass("is-active");
-                $("#emptyCloseModal").click(function () {
-                    $("#emptyOpenModal").removeClass("is-active");
+            if (key === 13 && !$(".artist-search").val()) {
+                // Search Bar Error Modal
+                $("#search-modal").addClass("is-active");
+                $(".modal-close").click(function () {
+                    $("#search-modal").removeClass("is-active");
                 });
             } else if (key === 13) {
                 searchArtists();
@@ -172,62 +262,33 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
                 // New Event Table Creation
-                for (var i = 0; i < response.length; i++) {
-                    $("#event-table").append("<tr class='event-data'>" +
-                        "<td class='venue'>" + response[i].venue.name + "</td>" +
-                        "<td class='city'>" + response[i].venue.city + "</td>" +
-                        "<td class='country'>" + response[i].venue.country + "</td>" +
-                        "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                        "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + ">Get Tickets</a></td>" +
-                        "</tr>"
-                    );
+                if (response.length === 0) {
+                    $("#event-table-body").append("<tr><td colspan='5' class='event-data'>No scheduled dates :(</td></tr>")
+                } else {
+                    for (var i = 0; i < response.length; i++) {
+                        // Places Local Shows First
+                        if (localStorage.getItem("location") === response[i].venue.region) {
+                            $("#event-table-body").prepend("<tr class='event-data near-you'>" +
+                                "<td class='venue'>" + response[i].venue.name + "</td>" +
+                                "<td class='city'>" + response[i].venue.city + "</td>" +
+                                "<td class='country'>" + response[i].venue.country + "</td>" +
+                                "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                                "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                "</tr>"
+                            );
+                        } else {
+                            $("#event-table-body").append("<tr class='event-data'>" +
+                                "<td class='venue'>" + response[i].venue.name + "</td>" +
+                                "<td class='city'>" + response[i].venue.city + "</td>" +
+                                "<td class='country'>" + response[i].venue.country + "</td>" +
+                                "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                                "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                "</tr>"
+                            );
+                        };
+                    };
                 };
             });
         });
     };
 });
-
-
-
-
-
-
-
-// AJAX Calls from prior testing with click function
-// Pull token from URL and pass into AJAX call
-// $(document).ready(function () {
-// let artistRequested = 'Ivan Torrent';
-// let URL = document.URL;
-
-// $('.spotify-link').on('click', function () {
-//     $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
-// });
-
-// $('.API_test').on('click', function () {
-//     let tokenArray = URL.split('#');
-//     let client_token = tokenArray[1];
-//     // function spotifyAPICall() {
-//     console.log("Hey!");
-//     let queryURL = `https://api.spotify.com/v1/search?q=${artistRequested}&type=artist&${client_token}`;
-//     $.ajax({
-//         url: queryURL,
-//         method: 'GET',
-//     }).then(function (response) {
-//         console.log(response);
-//     });
-//     // };
-
-//     $('.API_test').on('click', function () {
-//         let artistRequested = $('#search').val();
-//         console.log(artistRequested);
-//         let BITURL = `https://rest.bandsintown.com/artists/${artistRequested}/events?app_id=`
-//         let BIT_Id = '6d9b15f09f67304fbd702249a8b58714';
-//         $.ajax({
-//             url: BITURL + BIT_Id,
-//             method: 'GET',
-//         }).then(function (response) {
-//             console.log(response);
-//         });
-//     });
-// });
-// });

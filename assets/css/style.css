@@ -221,16 +221,14 @@ html, body {
 }
 
 /* General Table Styling */
-table, th {
-    border-bottom: 1px, solid, #4f5b66;
-}
-
 th {
     padding: 10px;
+    width: 200px;
 }
 
 td {
     padding: 10px;
+    width: 200px;
 }
 
 /* Artist Table */
@@ -238,6 +236,7 @@ td {
     font-size: 28px;
     font-weight: bolder;
     color: white;
+    width: 200px;
 }
 
 .artist-name {
@@ -270,11 +269,21 @@ td {
 }
 
 .event-data {
+    width: 200px;
     color: rgba(255, 255, 255, .6);
 }
 
 .event-data:hover {
     color: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+}
+
+.near-you {
+    color: rgba(29, 184, 85, .6);
+}
+
+.near-you:hover {
+    color: rgba(29, 184, 85, 1);
     transform: scale(1.05);
 }
 
