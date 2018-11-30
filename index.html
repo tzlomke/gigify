@@ -34,27 +34,31 @@
                 <div class="column landing-page">
                     <div class="card start-card">
                         <div class="card-content">
-                            <h1 class="logo">Gigify</h1> 
-
-                            <br><br><br>
-
-                            <div class="animated-search">
-                                    <div class="container-2">
-                                        <span class="icon"><i class="fa fa-map"></i></span>
-                                        <input type="search" id="search" placeholder="Enter your home state..." />
-                                    </div>
+                            
+                            <div class="logo-div">
+                                <h1 class="logo">Gigify</h1> 
+                            </div>
+                            
+                            <div class="search-div">
+                                <div class="animated-search">
+                                        <div class="container-2">
+                                            <span class="icon"><i class="fa fa-map"></i></span>
+                                            <input type="search" id="search" placeholder="Enter your home state..." />
+                                        </div>
+                                </div>
                             </div>
 
-                            <br><br><br>
+                            <div class="spotify-link-div">
+                                <a class="button spotify-link"><i class="fa fa-spotify" aria-hidden="true"></i> Link to your Spotify Account</a>
+                            </div>
 
-                            <a class="button spotify-link"><i class="fa fa-spotify" aria-hidden="true"></i> Link to your Spotify Account</a>
                         </div>
                     </div>
 
-                    <!-- Add 'About Gigify' Here (How to use, what it does, developer info) -->
+                    <!-- Add 'About Gigify' Here (How to use, what it does, developer info)
                     <div class="footer-modal">
                         <h1 class="logo"></h1>
-                    </div>
+                    </div> -->
                 </div>
 
                 
@@ -65,7 +69,7 @@
     <!-- Main Page -->
     <section id="main-page">
 
-        <!-- Sidebar -->
+        <!-- Navbar -->
         <div class="navbar" role="navigation" aria-lable="main-navigation">
             <div class="navbar-brand">
                 <h1 class="logo" id="nav-logo">Gigify</h1> 
@@ -79,54 +83,56 @@
         </div>
 
         <!-- Content Section -->
-        <div class="container level-item">
-            <div class="columns">
-                
-                <div class="column is-two-thirds level-left">
-                    <div class="columns">
+        <div class="columns">
 
-                        <div class="column">
-                            <table>
-                                <thead id="artist-column">
-                                    <tr>
-                                        <th class="table-heading">Artists</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="artist-table">
-                                    
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="column is-one-fifth artist-div">
+                <table>
+                    <thead id="artist-column">
+                        <tr>
+                            <th class="table-heading">Artists</th>
+                        </tr>
+                    </thead>
 
-                        <div class="column">
-                            <table>
-                                <thead>
-                                    <tr id="event-headers">
-                                        <td class="table-heading">Venue</td>
-                                        <td class="table-heading">City</td>
-                                        <td class="table-heading">Country</td>
-                                        <td class="table-heading">Date</td>
-                                        <td class="table-heading">Tickets</td>
-                                    </tr>
-                                </thead>
-                                <tbody id="event-table">
+                    <tbody id="artist-table">
 
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="column is-one-third level-right">
-                    <div>
-                        <!-- !!!!REMOVE SRC WHEN DONE DESIGNING PAGE  -->
-                        <iframe src="https://open.spotify.com/embed/artist/2VAvhf61GgLYmC6C8anyX1" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                    </div>
-                </div>
-
+                    </tbody>
+                </table>
             </div>
+
+            <div class="column">
+                <div class="columns is-centered">
+                    <div class="column event-div">
+                        <table id="event-table">
+                            <thead>
+                                <tr id="event-headers">
+                                    <th class="table-heading">Venue</th>
+                                    <th class="table-heading">City</th>
+                                    <th class="table-heading">Country</th>
+                                    <td class="table-heading">Date</th>
+                                    <th class="table-heading">Tickets</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="event-table-body">
+                            
+                            </tbody>
+                       
+                        </table>
+                    </div>
+                    
+                    <div class="column">
+                        <div class="columns is-centered">
+
+                            <div class="column is-four-fifths spotify-player-div">
+                                <iframe src="https://open.spotify.com/embed/artist/" width="400" height="480" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     </section>
 
     <!-- Firebase -->
