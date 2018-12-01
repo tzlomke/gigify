@@ -246,7 +246,39 @@ $(document).ready(function () {
                 // Adds New Artist to Table and Highlights
                 $("#artist-table").prepend("<tr class='artist-name selected' id=" +
                     response.artists.items[0].id + "><td class='artist-name-data'>" +
-                    response.artists.items[0].name + "</td></tr>")
+                    response.artists.items[0].name + "</td></tr>");
+                $.ajax({
+                    url: "https://rest.bandsintown.com/artists/" + userInput+ "/events?app_id=" + BIT_Id,
+                    method: "GET"
+                }).then(function (response) {
+                    // Event Table Creation for Top Artist
+                    if (response.length === 0) {
+                        $("#event-table-body").append("<tr><td colspan='5' class='event-data'>No scheduled dates :(</td></tr>")
+                    } else {
+                        for (var i = 0; i < response.length; i++) {
+                            // Places Local Shows First
+                            if (localStorage.getItem("location") === response[i].venue.region){
+                                $("#event-table-body").prepend("<tr class='event-data near-you'>" +
+                                    "<td class='venue'>" + response[i].venue.name + "</td>" +
+                                    "<td class='city'>" + response[i].venue.city + "</td>" +
+                                    "<td class='country'>" + response[i].venue.country + "</td>" +
+                                    "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                                    "<td class='ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                    "</tr>"
+                                );
+                            } else {
+                                $("#event-table-body").append("<tr class='event-data'>" +
+                                    "<td class='venue'>" + response[i].venue.name + "</td>" +
+                                    "<td class='city'>" + response[i].venue.city + "</td>" +
+                                    "<td class='country'>" + response[i].venue.country + "</td>" +
+                                    "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
+                                    "<td class='ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                    "</tr>"
+                                );
+                            };
+                        };
+                    };
+                });
             });
         };
 
