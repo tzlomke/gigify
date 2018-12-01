@@ -114,7 +114,7 @@ $(document).ready(function () {
                 $("#location-modal").removeClass("is-active");
             });
         } else {
-            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=5337c5eb0a2442b182b404f5a590b917&redirect_uri=https:%2F%2Ftzlomke.github.io%2Fgigify_test%2F&scope=user-top-read%20user-library-read&state=123');
+            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
         };
     });
 
@@ -227,13 +227,6 @@ $(document).ready(function () {
                 var results1 = response.artists.items[0].id;
                 // passes data to Spotify music player
                 $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + results1);
-                if (response.error != -1) {
-                    // Invalid Search Error Modal
-                    $("#search-modal").addClass("is-active");
-                    $(".modal-close").click(function () {
-                        $("#search-modal").removeClass("is-active");
-                    });
-                };
                 // Removes selected class from previous siblings
                 $("#artist-table>tr>td.selected").removeClass("selected");
                 // Adds New Artist to Table and Highlights
