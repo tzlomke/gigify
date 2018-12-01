@@ -45,6 +45,17 @@ body {
     height: 100px;
 }
 
+.about-gigify {
+    font-size: 24px;
+    margin-top: 200px;
+    bottom: 0;
+    color: #ffffff;
+}
+
+#about-gigify-arrow:hover {
+    cursor: pointer;
+}
+
 /* Main Page Styling */
 #main-page {
     height: 100vh;
@@ -84,25 +95,79 @@ body {
 }
 
 /* About Gigify */
-.about-gigify {
-    font-size: 24px;
-    margin-top: 200px;
-    bottom: 0;
-    color: #ffffff;
+.about-card {
+    width: 100vw;
+    height: 100vh;
+    padding-top: 10px;
+    background: rgba(36, 87, 108, 0.2);
+    border: none;
+    box-shadow: none;
+    font-size: 20px;
+    align-content: center;
+    color: black;
+}
+
+.about-container {
+    text-align: center;
+}
+
+.about-header {
+    font-family: 'Pacifico', cursive;
+    display: inline-block;
+    font-size: 80px;
+}
+
+.tagline-container {
+    text-align: center;
+}
+
+.tagline-div {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    display: inline-block;
+    font-style: oblique;
+}
+
+.how-container {
+    text-align: center;
+}
+
+.how-div {
+    display: inline-block;
+}
+
+#how-header {
+    font-size: 30px;
+}
+
+.developer-container {
+    padding-top: 40px;
+    text-align: center;
+}
+
+.developer-div {
+    display: inline-block;
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 20px;
 }
 
 #about-gigify-container {
     position: relative;
     padding: 0;
     margin: 0;
-    background: url("../images/grey_wash_wall.png");
+    background: url("../images/whirlpool.png");
     height: 100vh;
 }
 
-
-#about-gigify-arrow:hover {
-    cursor: pointer;
+.team-images-container {
+    text-align: center;
 }
+
+.team-images {
+    display: inline-block;
+}
+
 
 /* Content Page Styling */
 .content-container {
