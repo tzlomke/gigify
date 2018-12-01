@@ -1,3 +1,17 @@
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyC88VWTxZ8bT_lApnGOVR-Rr2zuNSY-qss",
+    authDomain: "bootcamp-a18e5.firebaseapp.com",
+    databaseURL: "https://bootcamp-a18e5.firebaseio.com",
+    projectId: "bootcamp-a18e5",
+    storageBucket: "bootcamp-a18e5.appspot.com",
+    messagingSenderId: "995593097318"
+};
+
+firebase.initializeApp(config);
+
+var database = firebase.database();
+
 // Bandsintown App ID
 var BIT_Id = "6d9b15f09f67304fbd702249a8b58714";
 
@@ -180,7 +194,7 @@ $(document).ready(function () {
                                     "<td class='city'>" + response[i].venue.city + "</td>" +
                                     "<td class='country'>" + response[i].venue.country + "</td>" +
                                     "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                                    "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                    "<td class='ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
                                     "</tr>"
                                 );
                             } else {
@@ -189,7 +203,7 @@ $(document).ready(function () {
                                     "<td class='city'>" + response[i].venue.city + "</td>" +
                                     "<td class='country'>" + response[i].venue.country + "</td>" +
                                     "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                                    "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                    "<td class='ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
                                     "</tr>"
                                 );
                             };
@@ -285,7 +299,7 @@ $(document).ready(function () {
                                 "<td class='city'>" + response[i].venue.city + "</td>" +
                                 "<td class='country'>" + response[i].venue.country + "</td>" +
                                 "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                                "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                "<td class='ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
                                 "</tr>"
                             );
                         } else {
@@ -294,13 +308,29 @@ $(document).ready(function () {
                                 "<td class='city'>" + response[i].venue.city + "</td>" +
                                 "<td class='country'>" + response[i].venue.country + "</td>" +
                                 "<td class='date'>" + moment(response[i].datetime).format("dddd, MMMM Do YYYY") + "</td>" +
-                                "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
+                                "<td class='ticket-link'><a class='button ticket-click' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
                                 "</tr>"
                             );
                         }
                     };
                 };
             });
+        });
+
+        // Stores Ticket Clicks to Firebase
+        // Stores Ticket Clicks to Firebase
+        document.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log(e.target.className);
+            if(e.target.className === 'button ticket-click') {
+                database.ref('Gigify/tickclick/').once('value', function(snapshot) {
+                    countTrack = snapshot.val().count;
+                    ++countTrack;
+                    database.ref('Gigify/tickclick/').update({
+                        count: countTrack,
+                    });
+                });
+            };
         });
     };
 });
