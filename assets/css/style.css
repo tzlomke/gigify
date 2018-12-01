@@ -45,6 +45,17 @@ body {
     height: 100px;
 }
 
+.modal-content {
+    box-shadow: 5px 5px 5px 5px rgb(21,31,36);
+    border-radius: 100px;
+    color: white;
+    background-color: rgba(29, 184, 85, 1);
+    text-align: center;
+    padding: 1% 0%;
+    font-size: 20px;
+    width: 30%;
+}
+
 /* Main Page Styling */
 #main-page {
     height: 100vh;
