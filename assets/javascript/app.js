@@ -93,6 +93,13 @@ $(document).ready(function () {
         $(".icon").css("color", "#4f5b66");
     });
 
+    // Scrolls to About Gigify Section
+    $("#about-gigify-arrow").on("click", function() {
+        $('html, body').animate({
+            scrollTop: $("#about-gigify-container").offset().top
+        }, 500);
+    });
+
     // Saves Location to Local Storage and Logs In to Spotify
     $(".spotify-link").on("click", function () {
 
@@ -107,7 +114,7 @@ $(document).ready(function () {
                 $("#location-modal").removeClass("is-active");
             });
         } else {
-            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=ca5834e480c6461fba72bb35632ecead&redirect_uri=https:%2F%2Ftzlomke.github.io%2FProject_1%2F&scope=user-top-read%20user-library-read&state=123');
+            $('.spotify-link').attr('href', 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=5337c5eb0a2442b182b404f5a590b917&redirect_uri=https:%2F%2Ftzlomke.github.io%2Fgigify_test%2F&scope=user-top-read%20user-library-read&state=123');
         };
     });
 
@@ -117,15 +124,18 @@ $(document).ready(function () {
     if ((URL).indexOf("access_token") === -1) {
 
         // Main Page Hidden
+
+        // UNCOMMENT WHEN DONE TESTING
         $("#main-page").css("display", "none");
 
         // Else statement (condition: access token in string). Main page functionality will occur within
     } else {
 
         // Landing Page Hidden
-        $("#landing-page").css("display", "none");
+        $("#landing-page-container").css("display", "none");
 
         // Split URL multiple times so that only the characters of the token are returned in the end. (Spotify will only allow access to user profile if token is passed in as a "header" in AJAX call, see below).
+        // (There's probably a DRYer way to do this, but this worked for now)
         var tokenArray = URL.split("#");
         var splitTokenArray = tokenArray[1].split("&");
         var finalTokenArray = splitTokenArray[0].split("=");
@@ -164,7 +174,7 @@ $(document).ready(function () {
                     } else {
                         for (var i = 0; i < response.length; i++) {
                             // Places Local Shows First
-                            if (localStorage.getItem("location") === response[i].venue.region) {
+                            if (localStorage.getItem("location") === response[i].venue.region){
                                 $("#event-table-body").prepend("<tr class='event-data near-you'>" +
                                     "<td class='venue'>" + response[i].venue.name + "</td>" +
                                     "<td class='city'>" + response[i].venue.city + "</td>" +
@@ -182,7 +192,7 @@ $(document).ready(function () {
                                     "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
                                     "</tr>"
                                 );
-                            }
+                            };
                         };
                     };
                 });
@@ -193,6 +203,8 @@ $(document).ready(function () {
                         spotifyArray[i].spotifyID + "><td class='artist-name-data'>" +
                         spotifyArray[i].artistName + "</td></tr>");
                 };
+                // Highlights first in artist table
+                $("#artist-table td:first").addClass("selected");
             });
         };
 
@@ -217,35 +229,42 @@ $(document).ready(function () {
                 $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + results1);
                 if (response.error != -1) {
                     // Invalid Search Error Modal
-                    $("#invalidOpenModal").addClass("is-active");
-                    $("#invalidCloseModal").click(function () {
-                        $("#invalidOpenModal").removeClass("is-active");
+                    $("#search-modal").addClass("is-active");
+                    $(".modal-close").click(function () {
+                        $("#search-modal").removeClass("is-active");
                     });
                 };
-                $("#artist-table").prepend("<tr class='artist-name' id=" +
-                    response.artists.items[0].id + "><td>" +
+                // Removes selected class from previous siblings
+                $("#artist-table>tr>td.selected").removeClass("selected");
+                // Adds New Artist to Table and Highlights
+                $("#artist-table").prepend("<tr class='artist-name selected' id=" +
+                    response.artists.items[0].id + "><td class='artist-name-data'>" +
                     response.artists.items[0].name + "</td></tr>")
             });
         };
 
         // Keystroke event to launch search
-        $(".artist-search").keypress(function (e) {
-            var key = e.which || e.keyCode;
-            if (key === 13 && !$(".artist-search").val()) {
-                // Search Bar Error Modal
+        $(".artist-search").on("keyup", function (e) {
+            var key = e.which
+            var inputVal = $(".artist-search").val().trim();
+            console.log(inputVal);
+            if (key == 13 && inputVal.length >= 1) {
+                searchArtists();
+            } else if (key == 13 && inputVal.length == 0) {
                 $("#search-modal").addClass("is-active");
                 $(".modal-close").click(function () {
                     $("#search-modal").removeClass("is-active");
                 });
-            } else if (key === 13) {
-                searchArtists();
             }
         });
 
         // Click Events for Artist Table Rows
         $(document).on("click", "#artist-table .artist-name", function () {
 
-            // Adds Class To Show Selected
+            // Removes Selected Class from First Element
+            $("#artist-table td:first").removeClass("selected");
+
+            // Adds Class To Show Selected (Will add back to first if necessary since it runs after removeClass method)
             $(this).addClass("selected").siblings().removeClass("selected");
 
             var queryURL2 = "https://rest.bandsintown.com/artists/" + this.textContent + "/events?app_id=" + BIT_Id;
@@ -267,7 +286,7 @@ $(document).ready(function () {
                 } else {
                     for (var i = 0; i < response.length; i++) {
                         // Places Local Shows First
-                        if (localStorage.getItem("location") === response[i].venue.region) {
+                        if (localStorage.getItem("location") === response[i].venue.region){
                             $("#event-table-body").prepend("<tr class='event-data near-you'>" +
                                 "<td class='venue'>" + response[i].venue.name + "</td>" +
                                 "<td class='city'>" + response[i].venue.city + "</td>" +
@@ -285,7 +304,7 @@ $(document).ready(function () {
                                 "<td class='ticket-link'><a class='button' href=" + response[i].offers[0].url + "target='_blank'>Get Tickets</a></td>" +
                                 "</tr>"
                             );
-                        };
+                        }
                     };
                 };
             });
