@@ -228,8 +228,6 @@ $(document).ready(function () {
         // Search Function
         function searchArtists() {
             event.preventDefault();
-            // Add a event table clear function here to clean up the table
-            $("#event-table .event-data").remove();
             var userInput = $(".artist-search").val().trim().toString();
             var queryURL1 = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&${client_token}`;
             $.ajax({
