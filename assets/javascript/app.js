@@ -228,6 +228,8 @@ $(document).ready(function () {
         // Search Function
         function searchArtists() {
             event.preventDefault();
+            // Add a event table clear function here to clean up the table
+            $("#event-table .event-data").remove();
             var userInput = $(".artist-search").val().trim().toString();
             var queryURL1 = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&${client_token}`;
             $.ajax({
@@ -239,10 +241,12 @@ $(document).ready(function () {
                 }
             }).then(function (response) {
                 var results1 = response.artists.items[0].id;
+                // clear table with search function
+                $("#event-table .event-data").remove();
                 // passes data to Spotify music player
                 $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + results1);
-                // Removes selected class from previous siblings
-                $("#artist-table>tr>td.selected").removeClass("selected");
+                // Removes selected class from previous siblings. <tr> was the decendent that had the selected class. <td> has been removed.
+                $("#artist-table > tr.selected").removeClass("selected");
                 // Adds New Artist to Table and Highlights
                 $("#artist-table").prepend("<tr class='artist-name selected' id=" +
                     response.artists.items[0].id + "><td class='artist-name-data'>" +
