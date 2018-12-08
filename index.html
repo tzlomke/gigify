@@ -1,243 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Gigify</title>
-        <!-- Favicon -->
-        <link rel="icon" href="assets/images/favicon.png">
-        <!-- Normalize -->
-        <link rel="stylesheet" href="assets/css/normalize.css">
-        <!-- Bulma.io -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
-        <!-- Font Awesome Icons -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-            crossorigin="anonymous">
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Bungee|Cabin+Sketch|Cutive|Lobster|Pacifico|Roboto+Condensed"
-            rel="stylesheet">
-        <!-- Custom Stylesheet -->
-        <link rel="stylesheet" href="assets/css/style.css">
-        <!-- Font Awesome Embed -->
-        <script src="https://use.fontawesome.com/9b7fd42174.js"></script>
-        <!-- jQuery -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Moment.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gigify</title>
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.png">
+    <!-- Normalize -->
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <!-- Bulma.io -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Cabin+Sketch|Cutive|Lobster|Pacifico|Roboto+Condensed"
+        rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome Embed -->
+    <script src="https://use.fontawesome.com/9b7fd42174.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+</head>
 
-    <body>
+<body>
 
-        <!-- Landing Page -->
-        <section class="section level" id="landing-page-container">
-            <div class="container level-item">
+    <!-- Landing Page -->
+    <section class="section level" id="landing-page-container">
+        <div class="container level-item">
 
-                <div class="columns is-multiline is-gapless">
-                    <div class="column is-full landing-page">
-                        <div class="card start-card">
-                            <div class="card-content">
+            <div class="columns is-multiline is-gapless">
+                <div class="column is-full landing-page">
+                    <div class="card start-card">
+                        <div class="card-content">
 
-                                <div class="logo-div">
-                                    <h1 class="logo">Gigify</h1>
-                                </div>
+                            <div class="logo-div">
+                                <h1 class="logo">Gigify</h1>
+                            </div>
 
-                                <div class="search-div">
-                                    <div class="animated-search">
-                                        <div class="container-2">
-                                            <span class="icon"><i class="fa fa-map"></i></span>
-                                            <input type="search" class="location-search" id="search" placeholder="Enter your home state..." />
-                                        </div>
+                            <div class="search-div">
+                                <div class="animated-search">
+                                    <div class="container-2">
+                                        <span class="icon"><i class="fa fa-map"></i></span>
+                                        <input type="search" class="location-search" id="search" placeholder="Enter your home state..." />
                                     </div>
                                 </div>
-
-                                <div class="spotify-link-div">
-                                    <a class="button spotify-link"><i class="fa fa-spotify" aria-hidden="true"></i> Link to
-                                        your Spotify Account</a>
-                                </div>
-
-                                <div class="about-gigify">
-                                    <h1>About Gigify</h1>
-                                    <span id="about-gigify-arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-                                </div>
-
                             </div>
-                        </div>
 
-                        
-
-                        <!-- Location Validation Modal -->
-                        <div class="modal" id="location-modal">
-                            <div class="modal-background"></div>
-                            <div class="modal-content">
-                                <h1><i class ="fas fa-map-pin fa-2x"></i> First, let us know where you're located...</h1>
+                            <div class="spotify-link-div">
+                                <a class="button spotify-link"><i class="fa fa-spotify" aria-hidden="true"></i> Link to
+                                    your Spotify Account</a>
                             </div>
-                            <button class="modal-close is-large" aria-label="close"></button>
+
+                            <div class="about-gigify">
+                                <h1>About Gigify</h1>
+                                <span id="about-gigify-arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                            </div>
+
                         </div>
                     </div>
 
-                    <!-- About Gigify Section -->
-                    <div class="column is-full" id="about-gigify-container">
-                        <div class="about-gigify-content">
-                            <div class="card about-card">
-                                <div class="columns is-centered">
-                                    <div class="column is-half">
-                                        
-                                        <div class="about-container">
-                                            <div class="about-header">
-                                                Gigify
-                                            </div>        
-                                        </div>
-                                        <div class="tagline-container">
-                                            <div class="tagline-div">
-                                                Your music. The shows you want to see. No More. No Less.
-                                            </div>
-                                        </div>
-                                        <div class="how-container">
-                                            <div class="how-div" id="how-header">
-                                                How It Works
-                                            </div>
-                                            <div class="how-div">
-                                                When you're looking for the next gig to add to your event calendar, Gigify does all of the hard work for you—without any of social media's clutter.
-                                                We leverage Spotify's affinity algorithm to find your favorite artists. 
-                                                That information is then used to determine when and where your favorite artists are playing.
-                                                Shows in your region will be returned first and highlighted in green. 
-                                                Best of all, as your tastes change, so will the shows we find for you. 
-                                                Did we mention that you can listen to your favorite bands and artists to get ready for the show right here?
-                                            </div>
-                                        </div>
 
-                                        <div class="developer-container">
-                                            <div class="developer-div">
-                                                Development Team
-                                            </div>
-                                            
-                                            <div class="columns is-centered">
-                                                
-                                                <div class="column">
-                                                    <div class="team-images-container">
-                                                        <div class="team-images">
-                                                            <figure class="image is-128x128">
-                                                                <img class="is-rounded" src="assets/images/nathan.jpeg">
-                                                            </figure>
-                                                            <div>
-                                                                Nathan Peck
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                               
 
-                                                <div class="column">
-                                                    <div class="team-images-container">
-                                                        <div class="team-images">
-                                                            <figure class="image is-128x128">
-                                                                <img class="is-rounded" src="assets/images/brant.jpeg">
-                                                            </figure>
-                                                            <div>
-                                                                Brant Keener
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="column">
-                                                    <div class="team-images-container">
-                                                        <div class="team-images">
-                                                            <figure class="image is-128x128">
-                                                                <img class="is-rounded" src="assets/images/taylor.jpeg">
-                                                            </figure>
-                                                        </div>
-                                                        <div>
-                                                            Taylor Zlomke
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                </div>   
-                            </div> 
+                    <!-- Location Validation Modal -->
+                    <div class="modal" id="location-modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <h1><i class="fas fa-map-pin fa-2x"></i> First, let us know where you're located...</h1>
                         </div>
-                    </div>
-                    
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Main Page -->
-        <section id="main-page">
-
-            <!-- Navbar -->
-            <div class="navbar" role="navigation" aria-lable="main-navigation">
-                <div class="navbar-brand">
-                    <h1 class="logo" id="nav-logo">Gigify</h1>
-                </div>
-                <div class="animated-search nav-search">
-                    <div class="container-2">
-                        <span class="icon"><i class="fa fa-search"></i></span>
-                        <input type="search" class="artist-search" id="search" placeholder="Search for a band or artist..." />
+                        <button class="modal-close is-large" aria-label="close"></button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Search Modal -->
-            <div class="modal" id="search-modal">
-                    <div class="modal-background"></div>
-                    <div class="modal-content">
-                        <h1>You know you can't search for nothing...</h1>
-                    </div>
-                    <button class="modal-close is-large" aria-label="close"></button>
-                </div>
-
-            <!-- Content Section -->
-            <div class="columns">
-
-                <div class="column is-one-fifth artist-div">
-                    <table id="artist-column">
-                        <thead>
-                            <tr>
-                                <th class="table-heading">Artists</th>
-                            </tr>
-                        </thead>
-                        <tbody id="artist-table">
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="column">
-                    <div class="columns is-centered">
-                        <div class="column event-div">
-                            <table id="event-table">
-                                <thead>
-                                    <tr id="event-headers">
-                                        <th class="event-table-heading venue">Venue</th>
-                                        <th class="event-table-heading city">City</th>
-                                        <th class="event-table-heading country">Country</th>
-                                        <td class="event-table-heading date">Date</th>
-                                        <th class="event-table-heading tickets">Tickets</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="event-table-body">
-                                    
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                        <div class="column">
+                <!-- About Gigify Section -->
+                <div class="column is-full" id="about-gigify-container">
+                    <div class="about-gigify-content">
+                        <div class="card about-card">
                             <div class="columns is-centered">
+                                <div class="column is-half">
 
-                                <div class="column is-half spotify-player-div">
-                                    <iframe src="https://open.spotify.com/embed/artist/" width="400" height="480"
-                                        frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                                    <div class="about-container">
+                                        <div class="about-header">
+                                            Gigify
+                                        </div>
+                                    </div>
+                                    <div class="tagline-container">
+                                        <div class="tagline-div">
+                                            Your music. The shows you want to see. No More. No Less.
+                                        </div>
+                                    </div>
+                                    <div class="how-container">
+                                        <div class="how-div" id="how-header">
+                                            How It Works
+                                        </div>
+                                        <div class="how-div">
+                                            When you're looking for the next gig to add to your event calendar, Gigify
+                                            does all of the hard work for you—without any of social media's clutter.
+                                            We leverage Spotify's affinity algorithm to find your favorite artists.
+                                            That information is then used to determine when and where your favorite
+                                            artists are playing.
+                                            Shows in your region will be returned first and highlighted in green.
+                                            Best of all, as your tastes change, so will the shows we find for you.
+                                            Did we mention that you can listen to your favorite bands and artists to
+                                            get ready for the show right here?
+                                        </div>
+                                    </div>
+
+                                    <div class="developer-container">
+                                        <div class="developer-div">
+                                            Development Team
+                                        </div>
+
+                                        <div class="columns is-centered">
+
+                                            <div class="column">
+                                                <div class="team-images-container">
+                                                    <div class="team-images">
+                                                        <figure class="image is-128x128">
+                                                            <img class="is-rounded" src="assets/images/nathan.jpeg">
+                                                        </figure>
+                                                        <div>
+                                                            Nathan Peck
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="column">
+                                                <div class="team-images-container">
+                                                    <div class="team-images">
+                                                        <figure class="image is-128x128">
+                                                            <img class="is-rounded" src="assets/images/brant.jpeg">
+                                                        </figure>
+                                                        <div>
+                                                            Brant Keener
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="column">
+                                                <div class="team-images-container">
+                                                    <div class="team-images">
+                                                        <figure class="image is-128x128">
+                                                            <img class="is-rounded" src="assets/images/taylor.jpeg">
+                                                        </figure>
+                                                    </div>
+                                                    <div>
+                                                        Taylor Zlomke
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -246,19 +170,98 @@
 
             </div>
 
-            <!-- Preloader -->
-            <!-- <div class="loader-container">
-                <ul class="loader">
-                    <li></li><li></li><li></li><li></li><li></li><li></li>
-                </ul>
-            </div> -->
+        </div>
+    </section>
 
-        </section>
+    <!-- Main Page -->
+    <section id="main-page">
 
-        <!-- Firebase -->
-        <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-        <!-- app.js -->
-        <script type="text/javascript" src="assets/javascript/app.js"></script>
-    </body>
+        <!-- Navbar -->
+        <div class="navbar" role="navigation" aria-lable="main-navigation">
+            <div class="navbar-brand">
+                <h1 class="logo" id="nav-logo">Gigify</h1>
+            </div>
+            <div class="animated-search nav-search">
+                <div class="container-2">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input type="search" class="artist-search" id="search" placeholder="Search for a band or artist..." />
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Modal -->
+        <div class="modal" id="search-modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <h1>You know you can't search for nothing...</h1>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+
+        <!-- Content Section -->
+        <div class="columns content-section">
+
+            <div class="column is-one-fifth artist-container">
+                <table id="artist-column">
+                    <thead>
+                        <tr>
+                            <th class="table-heading">Artists</th>
+                        </tr>
+                    </thead>
+                    <tbody id="artist-table">
+
+                    </tbody>
+                </table>
+
+                <div class="artist-dropdown">
+                    <button class="dropbtn">Artists</button>
+                    <div id="dropdown" class="dropdown-content">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="column event-container">
+                <div class="columns is-centered">
+                    <div class="column event-div">
+                        <table id="event-table">
+                            <thead>
+                                <tr id="event-headers">
+                                    <th class="event-table-heading venue">Venue</th>
+                                    <th class="event-table-heading city">City</th>
+                                    <th class="event-table-heading country">Country</th>
+                                    <td class="event-table-heading date">Date</th>
+                                    <th class="event-table-heading tickets">Tickets</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="event-table-body">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div class="column spotify-container">
+                        <div class="columns is-centered">
+
+                            <div class="column is-half spotify-player-div">
+                                <iframe src="https://open.spotify.com/embed/artist/" width="400" height="480"
+                                    frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <!-- app.js -->
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+</body>
 
 </html>
