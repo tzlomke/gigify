@@ -458,6 +458,21 @@ td {
     padding-top: 30px;
 }
 
+/* Large Devices */
+@media screen and (max-width: 980px) {
+
+    html,
+    body,
+        {
+        animation: 6s;
+    }
+
+    /*  */
+    #landing-page-container {
+        background-size: cover;
+    }
+}
+
 /* Medium Devices */
 @media screen and (max-height: 768px) {
     /* Artist Table */
@@ -498,12 +513,6 @@ td {
 
 /* Small Devices */
 @media screen and (max-width: 640px) {
-
-    html,
-    body,
-        {
-        animation: 6s;
-    }
 
     /* Landing Page */
     .start-card {
@@ -562,7 +571,7 @@ td {
     }
 
     .event-table-body {
-        max-height: calc(100vh - 301px);
+        max-height: calc(100vh - 380px);
     }
 
     .event-data {
