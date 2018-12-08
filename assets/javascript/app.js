@@ -108,7 +108,7 @@ $(document).ready(function () {
     });
 
     // Scrolls to About Gigify Section
-    $("#about-gigify-arrow").on("click", function() {
+    $("#about-gigify-arrow").on("click", function () {
         $('html, body').animate({
             scrollTop: $("#about-gigify-container").offset().top
         }, 500);
@@ -188,7 +188,7 @@ $(document).ready(function () {
                     } else {
                         for (var i = 0; i < response.length; i++) {
                             // Places Local Shows First
-                            if (localStorage.getItem("location") === response[i].venue.region){
+                            if (localStorage.getItem("location") === response[i].venue.region) {
                                 $("#event-table-body").prepend("<tr class='event-data near-you'>" +
                                     "<td class='venue'>" + response[i].venue.name + "</td>" +
                                     "<td class='city'>" + response[i].venue.city + "</td>" +
@@ -213,12 +213,15 @@ $(document).ready(function () {
 
                 // Artist Table Creation
                 for (var i = 0; i < spotifyArray.length; i++) {
-                    $("#artist-table").append("<tr class='artist-name' id=" +
+                    $("#artist-table").append("<tr class='artist-name' data-id=" +
                         spotifyArray[i].spotifyID + "><td class='artist-name-data'>" +
                         spotifyArray[i].artistName + "</td></tr>");
+                    $("#dropdown").append("<option class='artist-name' data-id=" +
+                        spotifyArray[i].spotifyID + ">" + spotifyArray[i].artistName +
+                        "</option>");
                 };
                 // Highlights first in artist table
-                $("#artist-table td:first").addClass("selected");
+                $("#artist-table tr:first").addClass("selected");
             });
         };
 
@@ -246,11 +249,11 @@ $(document).ready(function () {
                 // Removes selected class from previous siblings. <tr> was the decendent that had the selected class. <td> has been removed.
                 $("#artist-table > tr.selected").removeClass("selected");
                 // Adds New Artist to Table and Highlights
-                $("#artist-table").prepend("<tr class='artist-name selected' id=" +
+                $("#artist-table").prepend("<tr class='artist-name selected' data-id=" +
                     response.artists.items[0].id + "><td class='artist-name-data'>" +
                     response.artists.items[0].name + "</td></tr>");
                 $.ajax({
-                    url: "https://rest.bandsintown.com/artists/" + userInput+ "/events?app_id=" + BIT_Id,
+                    url: "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=" + BIT_Id,
                     method: "GET"
                 }).then(function (response) {
                     // Event Table Creation for Top Artist
@@ -259,7 +262,7 @@ $(document).ready(function () {
                     } else {
                         for (var i = 0; i < response.length; i++) {
                             // Places Local Shows First
-                            if (localStorage.getItem("location") === response[i].venue.region){
+                            if (localStorage.getItem("location") === response[i].venue.region) {
                                 $("#event-table-body").prepend("<tr class='event-data near-you'>" +
                                     "<td class='venue'>" + response[i].venue.name + "</td>" +
                                     "<td class='city'>" + response[i].venue.city + "</td>" +
@@ -300,10 +303,10 @@ $(document).ready(function () {
         });
 
         // Click Events for Artist Table Rows
-        $(document).on("click", "#artist-table .artist-name", function () {
+        $(document).on("click", "#artist-table .artist-name, #dropdown .artist-name", function () {
 
             // Removes Selected Class from First Element
-            $("#artist-table td:first").removeClass("selected");
+            $("#artist-table tr:first").removeClass("selected");
 
             // Adds Class To Show Selected (Will add back to first if necessary since it runs after removeClass method)
             $(this).addClass("selected").siblings().removeClass("selected");
@@ -311,7 +314,7 @@ $(document).ready(function () {
             var queryURL2 = "https://rest.bandsintown.com/artists/" + this.textContent + "/events?app_id=" + BIT_Id;
 
             // Pass Selected Artist to Spotify Player
-            $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + this.id);
+            $("iframe").attr("src", "https://open.spotify.com/embed/artist/" + $(this).attr("data-id"));
 
             // Clears Out Old Table
             $("#event-table .event-data").remove();
@@ -327,7 +330,7 @@ $(document).ready(function () {
                 } else {
                     for (var i = 0; i < response.length; i++) {
                         // Places Local Shows First
-                        if (localStorage.getItem("location") === response[i].venue.region){
+                        if (localStorage.getItem("location") === response[i].venue.region) {
                             $("#event-table-body").prepend("<tr class='event-data near-you'>" +
                                 "<td class='venue'>" + response[i].venue.name + "</td>" +
                                 "<td class='city'>" + response[i].venue.city + "</td>" +
@@ -351,13 +354,17 @@ $(document).ready(function () {
             });
         });
 
+        // Dropdown Menu
+        $(".dropbtn").on("click", function () {
+            $("#dropdown").toggleClass("show");
+        });
+
         // Stores Ticket Clicks to Firebase
-        // Stores Ticket Clicks to Firebase
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             e.preventDefault();
             console.log(e.target.className);
-            if(e.target.className === 'button ticket-click') {
-                database.ref('Gigify/tickclick/').once('value', function(snapshot) {
+            if (e.target.className === 'button ticket-click') {
+                database.ref('Gigify/tickclick/').once('value', function (snapshot) {
                     countTrack = snapshot.val().count;
                     ++countTrack;
                     database.ref('Gigify/tickclick/').update({
@@ -366,5 +373,16 @@ $(document).ready(function () {
                 });
             };
         });
+
+        // Move Spotify Player on Small Screens
+        function iframeMove(x) {
+            if (x.matches) { // If media query matches
+                $(".spotify-container").appendTo($(".artist-container"));
+            };
+        };
+
+        var x = window.matchMedia("(max-width: 640px)")
+        iframeMove(x);
+        x.addListener(iframeMove);
     };
 });
