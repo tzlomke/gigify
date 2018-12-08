@@ -458,6 +458,43 @@ td {
     padding-top: 30px;
 }
 
+/* Medium Devices */
+@media screen and (max-height: 768px) {
+    /* Artist Table */
+    .table-heading {
+        font-size: 18px;
+    }
+
+    .artist-name {
+        padding: 0px;
+        font-size: 12px;
+    }
+
+    /* Event Table */
+    .event-table-heading {
+        font-size: 18px;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .event-data {
+        padding: 0px;
+        margin: 0px;
+        font-size: 12px;
+    }
+
+    .ticket-click {
+        padding: 0px;
+        margin: 0px;
+        height: 50px;
+        width: 66px;
+        white-space: normal;
+    }
+
+    iframe {
+        width: 250px;
+    }
+}
 
 /* Small Devices */
 @media screen and (max-width: 640px) {
