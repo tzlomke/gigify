@@ -221,7 +221,7 @@ $(document).ready(function () {
                         "</option>");
                 };
                 // Highlights first in artist table
-                $("#artist-table td:first").addClass("selected");
+                $("#artist-table tr:first").addClass("selected");
             });
         };
 
