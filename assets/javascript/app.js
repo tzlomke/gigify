@@ -249,7 +249,7 @@ $(document).ready(function () {
                 // Removes selected class from previous siblings. <tr> was the decendent that had the selected class. <td> has been removed.
                 $("#artist-table > tr.selected").removeClass("selected");
                 // Adds New Artist to Table and Highlights
-                $("#artist-table").prepend("<tr class='artist-name selected' id=" +
+                $("#artist-table").prepend("<tr class='artist-name selected' data-id=" +
                     response.artists.items[0].id + "><td class='artist-name-data'>" +
                     response.artists.items[0].name + "</td></tr>");
                 $.ajax({
