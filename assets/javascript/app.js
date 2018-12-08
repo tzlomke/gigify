@@ -306,7 +306,7 @@ $(document).ready(function () {
         $(document).on("click", "#artist-table .artist-name, #dropdown .artist-name", function () {
 
             // Removes Selected Class from First Element
-            $("#artist-table td:first").removeClass("selected");
+            $("#artist-table tr:first").removeClass("selected");
 
             // Adds Class To Show Selected (Will add back to first if necessary since it runs after removeClass method)
             $(this).addClass("selected").siblings().removeClass("selected");
