@@ -467,7 +467,6 @@ td {
         animation: 6s;
     }
 
-    /*  */
     #landing-page-container {
         background-size: cover;
     }
@@ -475,6 +474,26 @@ td {
 
 /* Medium Devices */
 @media screen and (max-height: 768px) {
+    /* Landing Page */
+    .about-gigify {
+        margin-top: 100px;
+    }
+
+    /* About Gigify */
+    .about-card {
+        height: 100%;
+        padding: 20px;
+    }
+
+    #about-gigify-container {
+        height: 100%;
+    }
+
+    /* Content Page */
+    .content-section {
+        margin-left: 0px;
+    }
+
     /* Artist Table */
     .table-heading {
         font-size: 18px;
