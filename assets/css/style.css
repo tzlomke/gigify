@@ -182,6 +182,10 @@ body {
     display: inline-block;
 }
 
+.prof-pic:hover {
+    cursor: pointer;
+}
+
 
 /* Content Page Styling */
 .content-section {
