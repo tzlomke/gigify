@@ -138,8 +138,6 @@ $(document).ready(function () {
     if ((URL).indexOf("access_token") === -1) {
 
         // Main Page Hidden
-
-        // UNCOMMENT WHEN DONE TESTING
         $("#main-page").css("display", "none");
 
         // Else statement (condition: access token in string). Main page functionality will occur within
@@ -149,7 +147,7 @@ $(document).ready(function () {
         $("#landing-page-container").css("display", "none");
 
         // Split URL multiple times so that only the characters of the token are returned in the end. (Spotify will only allow access to user profile if token is passed in as a "header" in AJAX call, see below).
-        // (There's probably a DRYer way to do this, but this worked for now)
+        // (There's probably a DRYer way to do this, but this works for now)
         var tokenArray = URL.split("#");
         var splitTokenArray = tokenArray[1].split("&");
         var finalTokenArray = splitTokenArray[0].split("=");
@@ -361,7 +359,6 @@ $(document).ready(function () {
 
         // Stores Ticket Clicks to Firebase
         document.addEventListener('click', function (e) {
-            e.preventDefault();
             console.log(e.target.className);
             if (e.target.className === 'button ticket-click') {
                 database.ref('Gigify/tickclick/').once('value', function (snapshot) {
