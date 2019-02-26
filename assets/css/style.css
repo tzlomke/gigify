@@ -466,7 +466,7 @@ td {
 @media screen and (max-width: 980px) {
 
     html,
-    body,
+    body
         {
         animation: 6s;
     }
